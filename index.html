@@ -8,7 +8,7 @@
 
   <body>
     <div class="container">
-      <ul class="comments">
+      <ul id="comments" class="comments">
         <li class="comment">
           <div class="comment-header">
             <div>Глеб Фокин</div>
@@ -45,27 +45,82 @@
         </li>
       </ul>
       <div class="add-form">
-        <input id="textElement"
+        <input id="add-name"
           type="text"
           class="add-form-name"
           placeholder="Введите ваше имя"
         />
-        <textarea id="comElement"
+        <textarea id="add-text"
           type="textarea"
           class="add-form-text"
-          placeholder="Введите ваш коментарий"
+          placeholder="Введите ваш комментарий"
           rows="4"
         ></textarea>
         <div class="add-form-row">
-          <button class="add-form-button">Написать</button>
+          <button id="add-button" class="add-form-button">Написать</button>
         </div>
       </div>
     </div>
   </body>
 
   <script>
+
     "use strict";
-    // Код писать здесь
-    console.log("It works!");
+    
+    const inputNameElement = document.querySelector ('.add-form-name');
+    const inputTextElement = document.querySelector ('.add-form-text');
+    const buttonElement = document.querySelector ('.add-form-button');
+    const commentElement = document.querySelector ('.comments');
+    const currentDate = new Date().getDate().toString().padStart(2, '0') + '.' + new Date().getMonth().toString().padStart(2, '0') + '.' + new Date().getFullYear().toString().substr(-2)  + " " + new Date().toLocaleTimeString().slice(0,-3); 
+
+    buttonElement.setAttribute('disabled', true);
+
+    inputNameElement.oninput = function () {
+      if (inputNameElement.value.length < 0 ) {
+        buttonElement.setAttribute('disabled', true)
+      }
+      else {
+        buttonElement.removeAttribute('disabled')
+      }
+    }
+
+    inputTextElement.oninput = function () {
+      if (inputTextElement.value.length < 0) {
+        buttonElement.setAttribute('disabled', true)
+      }
+      else {
+        buttonElement.removeAttribute('disabled')
+      }
+    }
+    
+
+    buttonElement.addEventListener("click", () => {
+      if (inputNameElement.value === '' || inputTextElement.value === '') {
+          inputNameElement.style.backgroundColor = 'red';
+          inputTextElement.style.backgroundColor = 'red';
+          return;
+        }
+      const commentElementOld = commentElement.innerHTML;
+      commentElement.innerHTML = commentElementOld + `<li class="comment">
+          <div class="comment-header">
+            <div>${inputNameElement.value}</div>
+            <div>${currentDate}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${inputTextElement.value}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button -active-like"></button>
+            </div>
+          </div>
+        </li>`;
+        inputNameElement.value="";
+        inputTextElement.value="";
+    });
+
   </script>
 </html>
