@@ -60,7 +60,7 @@
           <button id="add-button" class="add-form-button" type="submit">Написать</button>
         </div>
       </div>
-      <button id="button" >Удалить последний комментарий</button>
+      <button id="buttonTwo" >Удалить последний комментарий</button>
     </div>
   </body>
 
@@ -74,53 +74,20 @@
     const commentElement = document.querySelector ('.comments');
     const currentDate = new Date().toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: '2-digit'}) + " "+ new Date().toLocaleTimeString().slice(0,-3);
 
-    buttonElement.setAttribute('disabled', true);
 
-    inputNameElement.oninput = function () {
-      if (inputNameElement.value.length < 0 ) {
-        buttonElement.setAttribute('disabled', true)
-      }
-      else {
-        buttonElement.removeAttribute('disabled')
-      }
-    }
-
-    inputTextElement.oninput = function () {
-      if (inputTextElement.value.length < 0) {
-        buttonElement.setAttribute('disabled', true)
-      }
-      else {
-        buttonElement.removeAttribute('disabled')
-      }
-    }
-
-    inputNameElement.addEventListener('keyup', function(event) {
-        if (event.code === 'Enter')
-        {
-            event.preventDefault();
-            document.querySelector('form').submit();
-        }
-    });
-
-    inputTextElement.addEventListener('keyup', function(event) {
-        if (event.code === 'Enter')
-        {
-            event.preventDefault();
-            document.querySelector('form').submit();
-        }
-    });
-
-
-
-
-
+    //основное задание + неактивная кнопка при попытке отправить пустую форму
 
     buttonElement.addEventListener("click", () => {
-      if (inputNameElement.value === '' || inputTextElement.value === '') {
-          inputNameElement.style.backgroundColor = 'red';
-          inputTextElement.style.backgroundColor = 'red';
+      if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0 ) {
+        buttonElement.setAttribute('disabled', true);
+        inputNameElement.style.backgroundColor = 'IndianRed';
+        inputTextElement.style.backgroundColor = 'IndianRed';
           return;
         }
+        else {
+          buttonElement.removeAttribute('disabled')
+        }
+
       const commentElementOld = commentElement.innerHTML;
       commentElement.innerHTML = commentElementOld + `<li class="comment">
           <div class="comment-header">
@@ -142,6 +109,28 @@
         inputNameElement.value="";
         inputTextElement.value="";
     });
+
+
+    //отправка по клавише ЭНТЕР
+
+        inputNameElement.addEventListener('keyup', function(event) {
+        if (event.code === 'Enter')
+        {
+            event.preventDefault();
+            inputNameElement.submit();
+        }
+    });
+
+    inputTextElement.addEventListener('keyup', function(event) {
+        if (event.code === 'Enter')
+        {
+            event.preventDefault();
+            inputTextElement.submit();
+        }
+    });
+
+    //удалить последний комментарий
+
 
   </script>
 </html>
