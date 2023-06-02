@@ -78,15 +78,22 @@
     //основное задание + неактивная кнопка при попытке отправить пустую форму
 
     buttonElement.addEventListener("click", () => {
-      if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0 ) {
+      if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
         buttonElement.setAttribute('disabled', true);
         inputNameElement.style.backgroundColor = 'IndianRed';
         inputTextElement.style.backgroundColor = 'IndianRed';
           return;
         }
+        if (inputNameElement.value.length > 0 || inputTextElement.value.length > 0) {
+          inputNameElement.style.backgroundColor = none;
+          inputTextElement.style.backgroundColor = none;
+          buttonElement.setAttribute('disabled');
+        }
         else {
           buttonElement.removeAttribute('disabled')
         }
+
+      
 
       const commentElementOld = commentElement.innerHTML;
       commentElement.innerHTML = commentElementOld + `<li class="comment">
@@ -117,7 +124,7 @@
         if (event.code === 'Enter')
         {
             event.preventDefault();
-            inputNameElement.submit();
+            
         }
     });
 
@@ -125,7 +132,7 @@
         if (event.code === 'Enter')
         {
             event.preventDefault();
-            inputTextElement.submit();
+           
         }
     });
 
