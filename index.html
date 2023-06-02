@@ -79,62 +79,55 @@
 
     buttonElement.addEventListener("click", () => {
       if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
-        buttonElement.setAttribute('disabled', true);
         inputNameElement.style.backgroundColor = 'IndianRed';
         inputTextElement.style.backgroundColor = 'IndianRed';
           return;
         }
-        if (inputNameElement.value.length > 0 || inputTextElement.value.length > 0) {
-          inputNameElement.style.backgroundColor = none;
-          inputTextElement.style.backgroundColor = none;
-          buttonElement.setAttribute('disabled');
-        }
-        else {
-          buttonElement.removeAttribute('disabled')
-        }
 
-      
+      inputNameElement.addEventListener("input", () => {
+        buttonElement.setAttribute('disabled', true);
+        if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+          buttonElement.removeAttribute('disabled');
+        }
+      });
 
-      const commentElementOld = commentElement.innerHTML;
-      commentElement.innerHTML = commentElementOld + `<li class="comment">
-          <div class="comment-header">
-            <div>${inputNameElement.value}</div>
-            <div>${currentDate}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${inputTextElement.value}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
-            </div>
-          </div>
-        </li>`;
-        inputNameElement.value="";
-        inputTextElement.value="";
-    });
+      inputTextElement.addEventListener("input", () => {
+        buttonElement.setAttribute('disabled', true);
+        if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+          buttonElement.removeAttribute('disabled');
+        }
+      });
+
+          const commentElementOld = commentElement.innerHTML;
+          commentElement.innerHTML = commentElementOld + `<li class="comment">
+              <div class="comment-header">
+                <div>${inputNameElement.value}</div>
+                <div>${currentDate}</div>
+              </div>
+              <div class="comment-body">
+                <div class="comment-text">
+                  ${inputTextElement.value}
+                </div>
+              </div>
+              <div class="comment-footer">
+                <div class="likes">
+                  <span class="likes-counter">0</span>
+                  <button class="like-button -active-like"></button>
+                </div>
+              </div>
+            </li>`;
+            inputNameElement.value="";
+            inputTextElement.value="";
+        });
 
 
     //отправка по клавише ЭНТЕР
 
-        inputNameElement.addEventListener('keyup', function(event) {
-        if (event.code === 'Enter')
-        {
-            event.preventDefault();
-            
-        }
-    });
-
-    inputTextElement.addEventListener('keyup', function(event) {
-        if (event.code === 'Enter')
-        {
-            event.preventDefault();
-           
-        }
-    });
+    document.addEventListener("keyup", function(enter) {
+    if (enter.keyCode == 13) {
+    buttonElement.click();
+  }
+});
 
     //удалить последний комментарий
 
