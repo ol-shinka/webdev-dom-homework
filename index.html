@@ -81,6 +81,7 @@
       buttonElement.setAttribute('disabled', true);
       if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
         buttonElement.removeAttribute('disabled');
+        inputNameElement.style.backgroundColor = 'white';
       }
     });
 
@@ -88,9 +89,9 @@
       buttonElement.setAttribute('disabled', true);
       if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
         buttonElement.removeAttribute('disabled');
+        inputTextElement.style.backgroundColor = 'white';
       }
     });
-
 
 
     const commentElementOld = commentElement.innerHTML;
