@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <ul id="comments" class="comments">
-      <li class="comment">
+      <li class="comment" data-name="Глеб Фокин">
         <div class="comment-header">
           <div>Глеб Фокин</div>
           <div>12.02.22 12:18</div>
@@ -23,11 +23,11 @@
         <div class="comment-footer">
           <div class="likes">
             <span class="likes-counter">3</span>
-            <button class="like-button"></button>
+            <button class="like-button" data-like="like"></button>
           </div>
         </div>
       </li>
-      <li class="comment">
+      <li class="comment" data-name="Варвара Н.">
         <div class="comment-header">
           <div>Варвара Н.</div>
           <div>13.02.22 19:22</div>
@@ -40,7 +40,7 @@
         <div class="comment-footer">
           <div class="likes">
             <span class="likes-counter">75</span>
-            <button class="like-button -active-like"></button>
+            <button class="like-button -active-like" data-like="like"></button>
           </div>
         </div>
       </li>
@@ -87,7 +87,7 @@
 
     for (const commentElement of commentElements) {
       commentElement.addEventListener("click", () => {
-        console.log(commentElement.dataset.color);
+        console.log(commentElement.dataset.name);
       });
     }
   };
@@ -168,7 +168,8 @@
     });
 
     const commentElementOld = commentElement.innerHTML;
-    commentElement.innerHTML = commentElementOld + `<li class="comment">
+    commentElement.innerHTML = commentElementOld + 
+    `<li class="comment" data-name="${inputNameElement.value}">
           <div class="comment-header">
             <div>${inputNameElement.value}</div>
               <div>${currentDate}</div>
