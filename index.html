@@ -122,7 +122,7 @@
             </li>`;
     }).join("");
 
-    listElement.innerHTML = commentsHtml;
+    commentElement.innerHTML = commentsHtml;
     initEventListeners();
     initDeleteButtonsListeners();
   };
@@ -165,7 +165,6 @@
       }
     });
 
-
     const commentElementOld = commentElement.innerHTML;
     commentElement.innerHTML = commentElementOld + `<li class="comment">
           <div class="comment-header">
@@ -187,8 +186,6 @@
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
-
-
 
 
 
