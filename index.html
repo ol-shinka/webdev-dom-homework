@@ -70,7 +70,6 @@
 
   const commentElements = document.querySelectorAll(".comment");
 
-
   const comments = [
     {
       name: "Глеб Фокин",
@@ -120,26 +119,7 @@
         inputTextElement.style.backgroundColor = 'white';
       }
     });
-
-    const commentElementOld = commentElement.innerHTML;
-    commentElement.innerHTML = commentElementOld +
-      `<li class="comment" data-name="${inputNameElement.value}">
-          <div class="comment-header">
-            <div>${inputNameElement.value}</div>
-              <div>${currentDate}</div>
-            </div>
-            <div class="comment-body">
-              <div class="comment-text">
-                ${inputTextElement.value}
-            </div>
-          </div>
-            <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
-            </div>
-              </div>
-            </li>`;
+    
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
