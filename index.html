@@ -81,31 +81,6 @@
     }
   ];
 
-  const initEventListeners = () => {
-    const commentElements = document.querySelectorAll(".comment");
-
-    for (const commentElement of commentElements) {
-      commentElement.addEventListener("click", () => {
-        console.log(commentElement.dataset.name);
-      });
-    }
-  };
-
-  initEventListeners();
-
-  const initDeleteButtonsListeners = () => {
-    const deleteButtonsElements = document.querySelectorAll(".delete-button");
-    for (const deleteButtonElement of deleteButtonsElements) {
-      deleteButtonElement.addEventListener("click", () => {
-        const index = deleteButtonElement.dataset.index;
-        comments.splice(index, 1);
-        renderComments();
-      });
-    }
-  };
-
-  renderComments();
-
   const renderComments = () => {
     const commentsHtml = comments.map((comment, index) => {
       return `<li class="comment">
@@ -135,7 +110,30 @@
 
   renderComments();
 
+  const initEventListeners = () => {
+    const commentElements = document.querySelectorAll(".comment");
 
+    for (const commentElement of commentElements) {
+      commentElement.addEventListener("click", () => {
+        console.log(commentElement.dataset.name);
+      });
+    }
+  };
+
+  initEventListeners();
+
+  const initDeleteButtonsListeners = () => {
+    const deleteButtonsElements = document.querySelectorAll(".delete-button");
+    for (const deleteButtonElement of deleteButtonsElements) {
+      deleteButtonElement.addEventListener("click", () => {
+        const index = deleteButtonElement.dataset.index;
+        comments.splice(index, 1);
+        renderComments();
+      });
+    }
+  };
+
+  initDeleteButtonsListeners();
 
   const initButtonElem = buttonElement.addEventListener("click", () => {
     if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
@@ -169,6 +167,7 @@
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
+  
   initButtonElem();
 
   comments.push({
