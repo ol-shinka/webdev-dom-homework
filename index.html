@@ -131,6 +131,12 @@
 
   renderComments();
 
+  document.addEventListener("keyup", function (enter) {
+      if (enter.keyCode == 13) {
+        buttonElement.click();
+      }
+    });
+
   buttonElement.addEventListener("click", () => {
     if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
       inputNameElement.style.backgroundColor = 'IndianRed';
@@ -138,12 +144,8 @@
       return;
     }
 
-    document.addEventListener("keyup", function (enter) {
-      if (enter.keyCode == 13) {
-        buttonElement.click();
-      }
-    });
 
+    
     comments.push({
       name: inputNameElement,
       text: inputTextElement
