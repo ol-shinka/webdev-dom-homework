@@ -53,7 +53,7 @@
         <button id="add-button" class="add-form-button" type="submit">Написать</button>
       </div>
     </div>
-    <button id="buttonTwo">Удалить последний комментарий</button>
+    <button class="delete-button">Удалить последний комментарий</button>
   </div>
 </body>
 
@@ -66,9 +66,68 @@
   const buttonElement = document.querySelector('.add-form-button');
   const commentElement = document.querySelector('.comments');
   const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
+  const commentElements = document.querySelectorAll(".comment");
 
 
-  //основное задание + неактивная кнопка при попытке отправить пустую форму
+  const comments = [
+    {
+      name: "Глеб Фокин",
+      text: "Это будет первый комментарий на этой странице"
+    },
+    {
+      name: "Варвара Н.",
+      text: "Мне нравится как оформлена эта страница! ❤"
+    }
+  ];
+
+  const initEventListeners = () => {
+    const commentElements = document.querySelectorAll(".comment");
+
+    for (const commentElement of commentElements) {
+      commentElement.addEventListener("click", () => {
+        console.log(commentElement.dataset.color);
+      });
+    }
+  };
+
+  const initDeleteButtonsListeners = () => {
+    const deleteButtonsElements = document.querySelectorAll(".delete-button");
+    for (const deleteButtonElement of deleteButtonsElements) {
+      deleteButtonElement.addEventListener("click", () => {
+        const index = deleteButtonElement.dataset.index;
+        comments.splice(index, 1);
+        renderComments();
+      });
+    }
+  };
+
+  const renderComments = () => {
+    const commentsHtml = comments.map((comment) => {
+      return `<li class="comment">
+          <div class="comment-header">
+            <div>${inputNameElement.value}</div>
+              <div>${currentDate}</div>
+            </div>
+            <div class="comment-body">
+              <div class="comment-text">
+                ${inputTextElement.value}
+            </div>
+          </div>
+            <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button -active-like"></button>
+            </div>
+              </div>
+            </li>`;
+    }).join("");
+
+    listElement.innerHTML = commentsHtml;
+    initEventListeners();
+    initDeleteButtonsListeners();
+  };
+
+  renderComments();
 
   buttonElement.addEventListener("click", () => {
     if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
@@ -76,6 +135,19 @@
       inputTextElement.style.backgroundColor = 'IndianRed';
       return;
     }
+
+    document.addEventListener("keyup", function (enter) {
+      if (enter.keyCode == 13) {
+        buttonElement.click();
+      }
+    });
+
+    comments.push({
+      name: inputNameElement,
+      text: inputTextElement
+    });
+
+    renderComments();
 
     inputNameElement.addEventListener("input", () => {
       buttonElement.setAttribute('disabled', true);
@@ -117,15 +189,7 @@
   });
 
 
-  //отправка по клавише ЭНТЕР
 
-  document.addEventListener("keyup", function (enter) {
-    if (enter.keyCode == 13) {
-      buttonElement.click();
-    }
-  });
-
-    //удалить последний комментарий
 
 
 </script>
