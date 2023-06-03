@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <ul id="comments" class="comments">
-      <li class="comment" data-name="Глеб Фокин">
+      <li class="comment">
         <div class="comment-header">
           <div>Глеб Фокин</div>
           <div>12.02.22 12:18</div>
@@ -23,11 +23,11 @@
         <div class="comment-footer">
           <div class="likes">
             <span class="likes-counter">3</span>
-            <button class="like-button" data-like="like"></button>
+            <button class="like-button"></button>
           </div>
         </div>
       </li>
-      <li class="comment" data-name="Варвара Н.">
+      <li class="comment">
         <div class="comment-header">
           <div>Варвара Н.</div>
           <div>13.02.22 19:22</div>
@@ -40,7 +40,7 @@
         <div class="comment-footer">
           <div class="likes">
             <span class="likes-counter">75</span>
-            <button class="like-button -active-like" data-like="like"></button>
+            <button class="like-button -active-like"></button>
           </div>
         </div>
       </li>
@@ -81,6 +81,16 @@
     }
   ];
 
+  const initEventListeners = () => {
+    const commentElements = document.querySelectorAll(".comment");
+
+    for (const commentElement of commentElements) {
+      commentElement.addEventListener("click", () => {
+        console.log(commentElement.dataset.name);
+      });
+    }
+  };
+
   const initDeleteButtonsListeners = () => {
     const deleteButtonsElements = document.querySelectorAll(".delete-button");
     for (const deleteButtonElement of deleteButtonsElements) {
@@ -93,7 +103,7 @@
   };
 
   const renderComments = () => {
-    const commentsHtml = comments.map((comment, index) => {
+    const commentsHtml = comments.map((comment, index, name, text) => {
       return `<li class="comment">
           <div class="comment-header">
             <div>${comments.name}</div>
@@ -112,6 +122,7 @@
               </div>
             </li>`;
     }).join("");
+    initEventListeners();
     initDeleteButtonsListeners();
   };
 
@@ -122,37 +133,39 @@
       inputNameElement.style.backgroundColor = 'IndianRed';
       inputTextElement.style.backgroundColor = 'IndianRed';
       return;
-    }
+    };
+
     comments.push({
       name: inputNameElement,
       text: inputTextElement
     });
 
     renderComments();
+    
     inputNameElement.value = "";
     inputTextElement.value = "";
 
     document.addEventListener("keyup", function (enter) {
-    if (enter.keyCode == 13) {
-      buttonElement.click();
-    }
-  });
+      if (enter.keyCode == 13) {
+        buttonElement.click();
+      }
+    });
 
-  inputNameElement.addEventListener("input", () => {
-    buttonElement.setAttribute('disabled', true);
-    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-      buttonElement.removeAttribute('disabled');
-      inputNameElement.style.backgroundColor = 'white';
-    }
-  });
+    inputNameElement.addEventListener("input", () => {
+      buttonElement.setAttribute('disabled', true);
+      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+        buttonElement.removeAttribute('disabled');
+        inputNameElement.style.backgroundColor = 'white';
+      }
+    });
 
-  inputTextElement.addEventListener("input", () => {
-    buttonElement.setAttribute('disabled', true);
-    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-      buttonElement.removeAttribute('disabled');
-      inputTextElement.style.backgroundColor = 'white';
-    }
-  });
+    inputTextElement.addEventListener("input", () => {
+      buttonElement.setAttribute('disabled', true);
+      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+        buttonElement.removeAttribute('disabled');
+        inputTextElement.style.backgroundColor = 'white';
+      }
+    });
   });
 
 
