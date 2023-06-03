@@ -54,7 +54,7 @@
         <button id="add-button" class="add-form-button" type="submit">Написать</button>
       </div>
     </div>
-    <button class="delete-button">Удалить последний комментарий</button>
+    <button class="delete-button"  >Удалить последний комментарий</button>
   </div>
 </body>
 
@@ -104,7 +104,7 @@
   };
 
   const renderComments = () => {
-    const commentsHtml = comments.map((comment) => {
+    const commentsHtml = comments.map((comment, index) => {
       return `<li class="comment">
           <div class="comment-header">
             <div>${comments.name}</div>
@@ -143,8 +143,6 @@
       inputTextElement.style.backgroundColor = 'IndianRed';
       return;
     }
-
-
     
     comments.push({
       name: inputNameElement,
