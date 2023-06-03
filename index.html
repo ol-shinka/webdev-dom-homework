@@ -119,10 +119,17 @@
         inputTextElement.style.backgroundColor = 'white';
       }
     });
-    
+
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
+
+  comments.push({
+    name: inputNameElement,
+    text: inputTextElement
+  });
+
+  renderComments();
 
   const initDeleteButtonsListeners = () => {
     const deleteButtonsElements = document.querySelectorAll(".delete-button");
