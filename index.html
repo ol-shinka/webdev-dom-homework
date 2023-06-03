@@ -54,7 +54,7 @@
         <button id="add-button" class="add-form-button" type="submit">Написать</button>
       </div>
     </div>
-    <button class="delete-button" data-index="${index}" >Удалить последний комментарий</button>
+    <button class="delete-button" data-index="${index}">Удалить последний комментарий</button>
   </div>
 </body>
 
@@ -67,7 +67,7 @@
   const buttonElement = document.querySelector('.add-form-button');
   const commentElement = document.querySelector('.comments');
   const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
-  
+
   const commentElements = document.querySelectorAll(".comment");
 
 
@@ -98,7 +98,7 @@
       inputTextElement.style.backgroundColor = 'IndianRed';
       return;
     }
-    
+
     document.addEventListener("keyup", function (enter) {
       if (enter.keyCode == 13) {
         buttonElement.click();
@@ -122,8 +122,8 @@
     });
 
     const commentElementOld = commentElement.innerHTML;
-    commentElement.innerHTML = commentElementOld + 
-    `<li class="comment" data-name="${inputNameElement.value}">
+    commentElement.innerHTML = commentElementOld +
+      `<li class="comment" data-name="${inputNameElement.value}">
           <div class="comment-header">
             <div>${inputNameElement.value}</div>
               <div>${currentDate}</div>
@@ -183,12 +183,6 @@
   };
 
   renderComments();
-
-
-
- 
-
-
 
 </script>
 
