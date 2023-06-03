@@ -44,6 +44,7 @@
           </div>
         </div>
       </li>
+
     </ul>
     <div class="add-form">
       <input id="add-name" type="text" class="add-form-name" placeholder="Введите ваше имя" />
@@ -66,6 +67,7 @@
   const buttonElement = document.querySelector('.add-form-button');
   const commentElement = document.querySelector('.comments');
   const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
+  
   const commentElements = document.querySelectorAll(".comment");
 
 
@@ -105,12 +107,12 @@
     const commentsHtml = comments.map((comment) => {
       return `<li class="comment">
           <div class="comment-header">
-            <div>${inputNameElement.value}</div>
+            <div>${comments.name}</div>
               <div>${currentDate}</div>
             </div>
             <div class="comment-body">
               <div class="comment-text">
-                ${inputTextElement.value}
+                ${comments.text}
             </div>
           </div>
             <div class="comment-footer">
