@@ -112,20 +112,17 @@
               </div>
             </li>`;
     }).join("");
-
     initDeleteButtonsListeners();
-   
   };
 
   renderComments();
 
-  const initButtonElem = () => buttonElement.addEventListener("click", () => {
+  buttonElement.addEventListener("click", () => {
     if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
       inputNameElement.style.backgroundColor = 'IndianRed';
       inputTextElement.style.backgroundColor = 'IndianRed';
       return;
     }
-
     comments.push({
       name: inputNameElement,
       text: inputTextElement
@@ -136,28 +133,28 @@
     inputTextElement.value = "";
 
     document.addEventListener("keyup", function (enter) {
-      if (enter.keyCode == 13) {
-        buttonElement.click();
-      }
-    });
-
-    inputNameElement.addEventListener("input", () => {
-      buttonElement.setAttribute('disabled', true);
-      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-        buttonElement.removeAttribute('disabled');
-        inputNameElement.style.backgroundColor = 'white';
-      }
-    });
-
-    inputTextElement.addEventListener("input", () => {
-      buttonElement.setAttribute('disabled', true);
-      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-        buttonElement.removeAttribute('disabled');
-        inputTextElement.style.backgroundColor = 'white';
-      }
-    });
+    if (enter.keyCode == 13) {
+      buttonElement.click();
+    }
   });
-  
+
+  inputNameElement.addEventListener("input", () => {
+    buttonElement.setAttribute('disabled', true);
+    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+      buttonElement.removeAttribute('disabled');
+      inputNameElement.style.backgroundColor = 'white';
+    }
+  });
+
+  inputTextElement.addEventListener("input", () => {
+    buttonElement.setAttribute('disabled', true);
+    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+      buttonElement.removeAttribute('disabled');
+      inputTextElement.style.backgroundColor = 'white';
+    }
+  });
+  });
+
 
 </script>
 
