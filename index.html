@@ -91,7 +91,53 @@
     }
   };
 
-  buttonElement.addEventListener("click", () => {
+  initEventListeners();
+
+  const initDeleteButtonsListeners = () => {
+    const deleteButtonsElements = document.querySelectorAll(".delete-button");
+    for (const deleteButtonElement of deleteButtonsElements) {
+      deleteButtonElement.addEventListener("click", () => {
+        const index = deleteButtonElement.dataset.index;
+        comments.splice(index, 1);
+        renderComments();
+      });
+    }
+  };
+
+  renderComments();
+
+  const renderComments = () => {
+    const commentsHtml = comments.map((comment, index) => {
+      return `<li class="comment">
+          <div class="comment-header">
+            <div>${comments.name}</div>
+              <div>${currentDate}</div>
+            </div>
+            <div class="comment-body">
+              <div class="comment-text">
+                ${comments.text}
+            </div>
+          </div>
+            <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button -active-like"></button>
+            </div>
+              </div>
+            </li>`;
+    }).join("");
+
+    
+    initEventListeners();
+    initDeleteButtonsListeners();
+    initButtonElem();
+  };
+
+  renderComments();
+
+
+
+  const initButtonElem = buttonElement.addEventListener("click", () => {
     if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
       inputNameElement.style.backgroundColor = 'IndianRed';
       inputTextElement.style.backgroundColor = 'IndianRed';
@@ -123,6 +169,7 @@
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
+  initButtonElem();
 
   comments.push({
     name: inputNameElement,
@@ -131,45 +178,9 @@
 
   renderComments();
 
-  const initDeleteButtonsListeners = () => {
-    const deleteButtonsElements = document.querySelectorAll(".delete-button");
-    for (const deleteButtonElement of deleteButtonsElements) {
-      deleteButtonElement.addEventListener("click", () => {
-        const index = deleteButtonElement.dataset.index;
-        comments.splice(index, 1);
-        renderComments();
-      });
-    }
-  };
-  renderComments();
 
-  const renderComments = () => {
-    const commentsHtml = comments.map((comment, index) => {
-      return `<li class="comment">
-          <div class="comment-header">
-            <div>${comments.name}</div>
-              <div>${currentDate}</div>
-            </div>
-            <div class="comment-body">
-              <div class="comment-text">
-                ${comments.text}
-            </div>
-          </div>
-            <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
-            </div>
-              </div>
-            </li>`;
-    }).join("");
 
-    commentElement.innerHTML = commentsHtml;
-    initEventListeners();
-    initDeleteButtonsListeners();
-  };
 
-  renderComments();
 
 </script>
 
