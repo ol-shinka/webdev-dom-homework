@@ -47,44 +47,6 @@
     }
   ];
 
-
-  //основное задание + неактивная кнопка при попытке отправить пустую форму
-
-  buttonElement.addEventListener("click", () => {
-    if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
-      inputNameElement.style.backgroundColor = 'IndianRed';
-      inputTextElement.style.backgroundColor = 'IndianRed';
-      return;
-    }
-
-    inputNameElement.addEventListener("input", () => {
-      buttonElement.setAttribute('disabled', true);
-      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-        buttonElement.removeAttribute('disabled');
-        inputNameElement.style.backgroundColor = 'white';
-      }
-    });
-
-    inputTextElement.addEventListener("input", () => {
-      buttonElement.setAttribute('disabled', true);
-      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-        buttonElement.removeAttribute('disabled');
-        inputTextElement.style.backgroundColor = 'white';
-      }
-    });
-  });
-
-
-  //отправка по клавише ЭНТЕР
-
-  document.addEventListener("keyup", function (enter) {
-    if (enter.keyCode == 13) {
-      buttonElement.click();
-    }
-  });
-
-  //удалить последний комментарий
-
   const initEventListeners = () => {
     const commentElements = document.querySelectorAll(".comment");
 
@@ -102,6 +64,7 @@
       deleteButtonElement.addEventListener("click", () => {
         const index = deleteButtonElement.dataset.index;
         comments.splice(index, 1);
+        renderComments();
       });
     }
   };
@@ -131,6 +94,47 @@
     initDeleteButtonsListeners();
   }
   renderComments();
+
+  //основное задание + неактивная кнопка при попытке отправить пустую форму
+
+  buttonElement.addEventListener("click", () => {
+    if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
+      inputNameElement.style.backgroundColor = 'IndianRed';
+      inputTextElement.style.backgroundColor = 'IndianRed';
+      return;
+    }
+
+    inputNameElement.addEventListener("input", () => {
+      buttonElement.setAttribute('disabled', true);
+      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+        buttonElement.removeAttribute('disabled');
+        inputNameElement.style.backgroundColor = 'white';
+      }
+    });
+
+    inputTextElement.addEventListener("input", () => {
+      buttonElement.setAttribute('disabled', true);
+      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+        buttonElement.removeAttribute('disabled');
+        inputTextElement.style.backgroundColor = 'white';
+      }
+    });
+  });
+  renderComments();
+
+  //отправка по клавише ЭНТЕР
+
+  document.addEventListener("keyup", function (enter) {
+    if (enter.keyCode == 13) {
+      buttonElement.click();
+    }
+  });
+
+  //удалить последний комментарий
+
+  
+
+  
 </script>
 
 </html>
