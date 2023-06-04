@@ -73,6 +73,21 @@
     }
   };
 
+  const initButtonLike = () => {
+    const buttonLike = document.querySelectorAll('.like-button -active-like');
+
+    for (const like of buttonLike) {
+      like.addEventListener('click', ({ target: t }) => {
+        if (t.classList.contains('.like-button -active-like')) {
+          const index = [...document.querySelectorAll('.like-button -active-like')].indexOf(t);
+          const count = document.querySelectorAll('.likes-counter')[index];
+          count.classList.toggle('active');
+          count.innerText -= [1, -1][+count.classList.contains('active')];
+        }
+      })
+    }
+  };
+
   const renderComments = () => {
     const commentsHtml = comments.map((comment, index, like) => {
       return `<li class="comment">
@@ -87,7 +102,7 @@
           </div>
             <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">${count}</span>
+              <span class="likes-counter">${like}</span>
               <button class="like-button -active-like">${initButtonLike}</button>
             </div>
               </div>
@@ -102,16 +117,6 @@
   };
 
   renderComments();
-
-  const initButtonLike = () => buttonLike.addEventListener('click', ({ target: t }) => {
-    if (t.classList.contains('.like-button -active-like')) {
-      const index = [...document.querySelectorAll('.like-button -active-like')].indexOf(t);
-      const count = document.querySelectorAll('.likes-counter')[index];
-      count.classList.toggle('active');
-      count.innerText -= [1, -1][+count.classList.contains('active')];
-    }
-  });
-
 
 
   buttonElement.addEventListener("click", () => {
