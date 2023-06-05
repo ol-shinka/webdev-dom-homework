@@ -12,7 +12,7 @@
     <ul class="comments">
 
       <!-- Список рендерится из JS -->
-  
+
     </ul>
     <div class="add-form">
       <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
@@ -33,7 +33,7 @@
   const buttonElement = document.querySelector('.add-form-button');
   const commentsElement = document.querySelector('.comments');
   const buttonElementDel = document.querySelector('.delete-button');
-  const currentDate = new Date().toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: '2-digit'}) + " "+ new Date().toLocaleTimeString().slice(0,-3);
+  const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
 
 
   const comments = [
@@ -42,18 +42,18 @@
       dateLast: '12.02.22 12:18',
       text: 'Это будет первый комментарий на этой страницe',
       likesQuantity: 3,
-      commentLike: false
+      commentLike: false,
+      likeColor: "like-button -no-active-like"
     },
     {
       name: 'Варвара Н.',
       dateLast: '13.02.22 19:22',
       text: 'Мне нравится как оформлена эта страница! ❤',
       likesQuantity: 75,
-      commentLike: false
+      commentLike: false,
+      likeColor: "like-button -no-active-like"
     },
   ];
-
-
 
   function initButtonLike() {
 
@@ -67,12 +67,12 @@
         if (commentsElement.commentLike) {
           commentsElement.likesQuantity -= 1;
           commentsElement.commentLike = false;
-          like.classList.add('-not-active-like');
-          like.classList.remove('-active-like');
+          commentsElement.likeColor = "like-button -no-active-like";
           renderComments();
         } else {
           commentsElement.likesQuantity += 1;
           commentsElement.commentLike = true;
+          commentsElement.likeColor = "like-button -active-like";
           renderComments();
         }
       })
@@ -96,14 +96,14 @@
           <div class="comment-footer">
             <div class="likes">
               <span class="likes-counter"> ${comment.likesQuantity}</span>
-              <button data-index="${index}" class="like-button -active-like"></button>
+              <button data-index="${index}" class="${comment.likeColor}"></button>
             </div>
           </div>
         </li>`;
     }).join("");
 
     commentsElement.innerHTML = commentsHtml;
-    
+
     initButtonLike();
   };
 
@@ -135,7 +135,8 @@
       dateLast: currentDate,
       text: inputTextElement.value,
       likesQuantity: 0,
-      commentLike: false
+      commentLike: false,
+      likeColor: "like-button -no-active-like"
     });
 
     renderComments();
