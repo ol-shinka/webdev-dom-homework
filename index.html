@@ -40,14 +40,16 @@
     {
       name: 'Глеб Фокин',
       dateLast: '12.02.22 12:18',
-      textComment: 'Это будет первый комментарий на этой страницe',
+      text: 'Это будет первый комментарий на этой страницe',
       likesQuantity: 3,
+      commentLike: false
     },
     {
       name: 'Варвара Н.',
       dateLast: '13.02.22 19:22',
-      textComment: 'Мне нравится как оформлена эта страница! ❤',
+      text: 'Мне нравится как оформлена эта страница! ❤',
       likesQuantity: 75,
+      commentLike: false
     },
   ];
 
@@ -62,11 +64,15 @@
         const likeIndex = like.dataset.index;
         const commentsElement = comments[likeIndex];
 
-        if (commentsElement.likeComment) {
-          commentsElement.likesQuantity =- 1;
+        if (commentsElement.commentLike) {
+          commentsElement.likesQuantity -= 1;
+          commentsElement.commentLike = false;
+          like.classList.add('-not-active-like');
+          like.classList.remove('-active-like');
           renderComments();
         } else {
-          commentsElement.likesQuantity =+ 1;
+          commentsElement.likesQuantity += 1;
+          commentsElement.commentLike = true;
           renderComments();
         }
       })
@@ -84,7 +90,7 @@
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${comment.textComment}
+              ${comment.text}
             </div>
           </div>
           <div class="comment-footer">
@@ -127,8 +133,9 @@
     comments.push({
       name: inputNameElement.value,
       dateLast: currentDate,
-      textComment: inputTextElement.value,
+      text: inputTextElement.value,
       likesQuantity: 0,
+      commentLike: false
     });
 
     renderComments();
