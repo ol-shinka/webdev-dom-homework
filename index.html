@@ -81,19 +81,19 @@
 
   initButtonLike();
 
-  const editSave = function () {
-    let note = document.querySelector('.comment-text');
-    if (this.textContent == 'Редактировать') {
-      this.textContent = 'Сохранить';
-      note.contentEditable = true;
-      note.focus();
-    }
-    else {
-      this.textContent = 'Редактировать';
-      note.contentEditable = false;
-    }
-    document.querySelector(".actions").addEventListener("click",() => {editSave});
-  };
+  // const editSave = function () {
+  //  let note = document.querySelector('.comment-text');
+   // if (this.textContent == 'Редактировать') {
+   //   this.textContent = 'Сохранить';
+   //   note.contentEditable = true;
+    //  note.focus();
+   // }
+   // else {
+  //    this.textContent = 'Редактировать';
+  //    note.contentEditable = false;
+  //  }
+  //  document.querySelector(".actions").addEventListener("click",() => {editSave});
+ // }; //
 
 
   const renderComments = () => {
@@ -120,7 +120,7 @@
 
     commentsElement.innerHTML = commentsHtml;
     initButtonLike();
-    editSave();
+   // editSave();
   };
 
   renderComments();
