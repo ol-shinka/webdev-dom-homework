@@ -81,6 +81,21 @@
 
   initButtonLike();
 
+  const editSave = function () {
+    let note = document.querySelector('.comment-text');
+    if (this.textContent == 'Редактировать') {
+      this.textContent = 'Сохранить';
+      note.contentEditable = true;
+      note.focus();
+    }
+    else {
+      this.textContent = 'Редактировать';
+      note.contentEditable = false;
+    }
+    document.querySelector(".actions").addEventListener("click",() => {editSave});
+  };
+
+
   const renderComments = () => {
     const commentsHtml = comments.map((comment, index) => {
       return `<li class="comment">
@@ -99,12 +114,13 @@
               <button data-index="${index}" class="${comment.likeColor}"></button>
             </div>
           </div>
+          <button class="actions">Редактировать</button>
         </li>`;
     }).join("");
 
     commentsElement.innerHTML = commentsHtml;
-
     initButtonLike();
+    editSave();
   };
 
   renderComments();
