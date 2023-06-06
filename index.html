@@ -172,6 +172,8 @@
     //const lastElement = commentsElement.lastIndexOf(commentElement)
     comments.pop();
 
+    renderComments();
+
     const lastElement = commentsElement.lastElementChild;
     lastElement.remove();
   });
