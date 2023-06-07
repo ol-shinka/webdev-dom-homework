@@ -9,115 +9,177 @@
 
 <body>
   <div class="container">
-    <ul id="comments" class="comments">
-      <li class="comment">
-        <div class="comment-header">
-          <div>Глеб Фокин</div>
-          <div>12.02.22 12:18</div>
-        </div>
-        <div class="comment-body">
-          <div class="comment-text">
-            Это будет первый комментарий на этой странице
-          </div>
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">3</span>
-            <button class="like-button"></button>
-          </div>
-        </div>
-      </li>
-      <li class="comment">
-        <div class="comment-header">
-          <div>Варвара Н.</div>
-          <div>13.02.22 19:22</div>
-        </div>
-        <div class="comment-body">
-          <div class="comment-text">
-            Мне нравится как оформлена эта страница! ❤
-          </div>
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">75</span>
-            <button class="like-button -active-like"></button>
-          </div>
-        </div>
-      </li>
+    <ul class="comments">
+
+      <!-- Список рендерится из JS -->
+
     </ul>
     <div class="add-form">
-      <input id="add-name" type="text" class="add-form-name" placeholder="Введите ваше имя" />
-      <textarea id="add-text" type="textarea" class="add-form-text" placeholder="Введите ваш комментарий"
-        rows="4"></textarea>
+      <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
+      <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
       <div class="add-form-row">
-        <button id="add-button" class="add-form-button" type="submit">Написать</button>
+        <button class="add-form-button">Написать</button>
       </div>
     </div>
-    <button id="buttonTwo">Удалить последний комментарий</button>
+    <button class="delete-button">Удалить последний комментарий</button>
   </div>
 </body>
 
 <script>
-
   "use strict";
 
   const inputNameElement = document.querySelector('.add-form-name');
   const inputTextElement = document.querySelector('.add-form-text');
   const buttonElement = document.querySelector('.add-form-button');
-  const commentElement = document.querySelector('.comments');
+  const commentsElement = document.querySelector('.comments');
+  const buttonElementDel = document.querySelector('.delete-button');
   const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
 
 
-  //основное задание + неактивная кнопка при попытке отправить пустую форму
+  const comments = [
+    {
+      name: 'Глеб Фокин',
+      dateLast: '12.02.22 12:18',
+      text: 'Это будет первый комментарий на этой страницe',
+      likesQuantity: 3,
+      commentLike: false,
+      likeColor: "like-button -no-active-like"
+    },
+    {
+      name: 'Варвара Н.',
+      dateLast: '13.02.22 19:22',
+      text: 'Мне нравится как оформлена эта страница! ❤',
+      likesQuantity: 75,
+      commentLike: false,
+      likeColor: "like-button -no-active-like"
+    },
+  ];
 
-  buttonElement.addEventListener("click", () => {
-    if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0) {
-      inputNameElement.style.backgroundColor = 'IndianRed';
-      inputTextElement.style.backgroundColor = 'IndianRed';
-      return;
+
+
+
+  function initButtonLike() {
+
+    const buttonLikes = document.querySelectorAll('.like-button');
+
+    for (const like of buttonLikes) {
+      like.addEventListener("click", (event) => {
+        const likeIndex = like.dataset.index;
+        const commentsElement = comments[likeIndex];
+        event.stopPropagation();
+
+        if (commentsElement.commentLike) {
+          commentsElement.likesQuantity -= 1;
+          commentsElement.commentLike = false;
+          commentsElement.likeColor = "like-button -no-active-like";
+          renderComments();
+        } else {
+          commentsElement.likesQuantity += 1;
+          commentsElement.commentLike = true;
+          commentsElement.likeColor = "like-button -active-like";
+          renderComments();
+        }
+      })
     }
+  };
 
-    inputNameElement.addEventListener("input", () => {
-      buttonElement.setAttribute('disabled', true);
-      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-        buttonElement.removeAttribute('disabled');
-        inputNameElement.style.backgroundColor = 'white';
-      }
-    });
-
-    inputTextElement.addEventListener("input", () => {
-      buttonElement.setAttribute('disabled', true);
-      if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-        buttonElement.removeAttribute('disabled');
-        inputTextElement.style.backgroundColor = 'white';
-      }
-    });
+  initButtonLike();
 
 
-    const commentElementOld = commentElement.innerHTML;
-    commentElement.innerHTML = commentElementOld + `<li class="comment">
+
+  // const editSave = function () {
+  //  let note = document.querySelector('.comment-text');
+  // if (this.textContent == 'Редактировать') {
+  //   this.textContent = 'Сохранить';
+  //   note.contentEditable = true;
+  //  note.focus();
+  // }
+  // else {
+  //    this.textContent = 'Редактировать';
+  //    note.contentEditable = false;
+  //  }
+  //  document.querySelector(".actions").addEventListener("click",() => {editSave});
+  // }; //
+
+
+
+
+  const renderComments = () => {
+    const commentsHtml = comments.map((comment, index) => {
+      return `<li class="comment" data>
           <div class="comment-header">
-            <div>${inputNameElement.value}</div>
-              <div>${currentDate}</div>
-            </div>
-            <div class="comment-body">
-              <div class="comment-text">
-                ${inputTextElement.value}
+            <div>${comment.name}</div>
+            <div>${comment.dateLast}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${comment.text}
             </div>
           </div>
-            <div class="comment-footer">
+          <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
+              <span class="likes-counter"> ${comment.likesQuantity}</span>
+              <button data-index="${index}" class="${comment.likeColor}"></button>
             </div>
-              </div>
-            </li>`;
+          </div>
+      
+        </li>`;
+    }).join("");
+
+    commentsElement.innerHTML = commentsHtml;
+    initButtonLike();
+    // editSave();
+  };
+
+  renderComments();
+
+
+
+  const commentElements = document.querySelectorAll(".comment")
+
+  for (const comment of commentElements) {
+    comment.addEventListener("click", () => {
+    const index = comment.dataset.index;
+    }
+  )};
+
+
+
+  buttonElement.setAttribute('disabled', true);
+
+  inputNameElement.addEventListener("input", () => {
+    buttonElement.setAttribute('disabled', true);
+
+    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+      buttonElement.removeAttribute('disabled');
+    }
+  });
+
+  inputTextElement.addEventListener("input", () => {
+
+    buttonElement.setAttribute('disabled', true);
+    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+      buttonElement.removeAttribute('disabled');
+    }
+  });
+
+  buttonElement.addEventListener("click", () => {
+    buttonElement.setAttribute('disabled', true);
+
+    comments.push({
+      name: inputNameElement.value,
+      dateLast: currentDate,
+      text: inputTextElement.value,
+      likesQuantity: 0,
+      commentLike: false,
+      likeColor: "like-button -no-active-like"
+    });
+
+    renderComments();
+
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
-
-
-  //отправка по клавише ЭНТЕР
 
   document.addEventListener("keyup", function (enter) {
     if (enter.keyCode == 13) {
@@ -125,8 +187,18 @@
     }
   });
 
-    //удалить последний комментарий
 
+
+  buttonElementDel.addEventListener("click", () => {
+
+    //const lastElement = commentsElement.lastIndexOf(commentElement)
+    comments.pop();
+
+    renderComments();
+
+    //const lastElement = commentsElement.lastElementChild;
+    //lastElement.remove();
+  });
 
 </script>
 
