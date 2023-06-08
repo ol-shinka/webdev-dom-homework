@@ -92,7 +92,7 @@
       comment.addEventListener("click", () => {
         const index = comment.dataset.index;
         inputTextElement.value = `>${comments[index].text}\n${comments[index].name}`;
-        //inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
+        inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
       })
     }
   }
