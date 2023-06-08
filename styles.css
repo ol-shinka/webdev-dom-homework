@@ -65,6 +65,14 @@ body {
     white-space: pre-line;
   }
 
+  .quote {
+    background-color: white;
+    font-size: 18px;
+    color: black;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding: 16px;
+  }
   .likes {
     display: flex;
     align-items: center;
