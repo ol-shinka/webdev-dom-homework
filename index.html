@@ -93,9 +93,9 @@
         const index = comment.dataset.index;
         inputTextElement.value = `>${comments[index].text}\n${comments[index].name}`;
         //inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
-      })
-    }
-  }
+      });
+    };
+  };
 
   replyComment();
 
@@ -125,7 +125,6 @@
     commentsElement.innerHTML = commentsHtml;
     initButtonLike();
     replyComment();
-    // editSave();
   };
 
   renderComments();
