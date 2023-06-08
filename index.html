@@ -83,8 +83,6 @@
 
   initButtonLike();
 
-
-
   const replyComment = () => {
     const commentElement = document.querySelectorAll(".comment");
 
@@ -98,7 +96,6 @@
   };
 
   replyComment();
-
 
   const renderComments = () => {
     const commentsHtml = comments.map((comment, index) => {
@@ -129,7 +126,6 @@
   };
 
   renderComments();
-
 
   buttonElement.setAttribute('disabled', true);
 
@@ -180,8 +176,6 @@
       buttonElement.click();
     }
   });
-
-
 
   buttonElementDel.addEventListener("click", () => {
 
