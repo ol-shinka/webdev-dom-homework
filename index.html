@@ -83,8 +83,6 @@
 
   initButtonLike();
 
-
-
   const replyComment = () => {
     const commentElement = document.querySelectorAll(".comment");
 
@@ -92,13 +90,12 @@
       comment.addEventListener("click", () => {
         const index = comment.dataset.index;
         inputTextElement.value = `>${comments[index].text}\n${comments[index].name}`;
-        inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
-      })
-    }
-  }
+        //inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
+      });
+    };
+  };
 
   replyComment();
-
 
   const renderComments = () => {
     const commentsHtml = comments.map((comment, index) => {
@@ -129,7 +126,6 @@
   };
 
   renderComments();
-
 
   buttonElement.setAttribute('disabled', true);
 
@@ -180,8 +176,6 @@
       buttonElement.click();
     }
   });
-
-
 
   buttonElementDel.addEventListener("click", () => {
 
