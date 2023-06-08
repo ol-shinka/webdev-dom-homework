@@ -90,7 +90,7 @@
       comment.addEventListener("click", () => {
         const index = comment.dataset.index;
         inputTextElement.value = `>${comments[index].text}\n${comments[index].name}`;
-        //inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
+        inputTextElement.value = `QUOTE_BEGIN ${inputTextElement.value} QUOTE_END`;
       });
     };
   };
@@ -122,7 +122,6 @@
     commentsElement.innerHTML = commentsHtml;
     initButtonLike();
     replyComment();
-    // editSave();
   };
 
   renderComments();
@@ -159,7 +158,9 @@
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
+        .replaceAll('"', "&quot;")
+        .replaceAll("QUOTE_BEGIN", " ")
+        .replaceAll("QUOTE_END", " "),
       likesQuantity: 0,
       commentLike: false,
       likeColor: "like-button -no-active-like"
