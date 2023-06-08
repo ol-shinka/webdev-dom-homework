@@ -85,22 +85,6 @@
 
 
 
-  // const editSave = function () {
-  //  let note = document.querySelector('.comment-text');
-  // if (this.textContent == 'Редактировать') {
-  //   this.textContent = 'Сохранить';
-  //   note.contentEditable = true;
-  //  note.focus();
-  // }
-  // else {
-  //    this.textContent = 'Редактировать';
-  //    note.contentEditable = false;
-  //  }
-  //  document.querySelector(".actions").addEventListener("click",() => {editSave});
-  // }; //
-
-
-
   const replyComment = () => {
     const commentElement = document.querySelectorAll(".comment");
 
@@ -108,6 +92,7 @@
       comment.addEventListener("click", () => {
         const index = comment.dataset.index;
         inputTextElement.value = `>${comments[index].text}\n${comments[index].name}`;
+        //inputTextElement.value = `QUOTE_BEGIN${inputTextElement.value}QUOTE_END`;
       })
     }
   }
