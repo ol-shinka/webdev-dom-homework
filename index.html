@@ -89,8 +89,7 @@
     for (const comment of commentElement) {
       comment.addEventListener("click", () => {
         const index = comment.dataset.index;
-        inputTextElement.value = `>${comments[index].text}\n${comments[index].name}`;
-        inputTextElement.value = `QUOTE_BEGIN ${inputTextElement.value} QUOTE_END`;
+        inputTextElement.value = `QUOTE_BEGIN ${comments[index].text}\n${comments[index].name} QUOTE_END`;
       });
     };
   };
@@ -101,12 +100,22 @@
     const commentsHtml = comments.map((comment, index) => {
       return `<li class="comment" data-index="${index}">
           <div class="comment-header">
-            <div>${comment.name}</div>
+            <div>${comment.name
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")}</div>
             <div>${comment.dateLast}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${comment.text}
+              ${comment.text
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+          .replaceAll("QUOTE_END", "</div>")}
             </div>
           </div>
           <div class="comment-footer">
@@ -148,19 +157,9 @@
     buttonElement.setAttribute('disabled', true);
 
     comments.push({
-      name: inputNameElement.value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
+      name: inputNameElement.value,
       dateLast: currentDate,
-      text: inputTextElement.value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("QUOTE_BEGIN", " ")
-        .replaceAll("QUOTE_END", " "),
+      text: inputTextElement.value,
       likesQuantity: 0,
       commentLike: false,
       likeColor: "like-button -no-active-like"
