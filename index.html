@@ -39,31 +39,31 @@
 
   let comments = [];
 
-function fetchTotal(){
-  const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
-    method: "GET"
-  });
+  function fetchTotal() {
+    const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
+      method: "GET"
+    });
 
-  fetchPromise.then((response) => {
-    const jsonPromise = response.json();
-    jsonPromise.then((responseData) => {
-      const appComments = responseData.comments.map((comment) => {
-        return {
-          name: comment.author.name,
-          dateLast: currentDate,
-          text: comment.text,
-          likesQuantity: comment.likes,
-          likeColor: "like-button -no-active-like",
-          commentLike: false
-        }
-      });
-      comments = appComments;
-      //comments = responseData.comments;
-      renderComments();
-    })
-  });
-}
-fetchTotal();
+    fetchPromise.then((response) => {
+      const jsonPromise = response.json();
+      jsonPromise.then((responseData) => {
+        const appComments = responseData.comments.map((comment) => {
+          return {
+            name: comment.author.name,
+            dateLast: currentDate,
+            text: comment.text,
+            likesQuantity: comment.likes,
+            likeColor: "like-button -no-active-like",
+            commentLike: false
+          }
+        });
+        comments = appComments;
+        //comments = responseData.comments;
+        renderComments();
+      })
+    });
+  }
+  fetchTotal();
 
   function initButtonLike() {
 
@@ -130,7 +130,7 @@ fetchTotal();
     commentsElement.innerHTML = commentsHtml;
     initButtonLike();
     replyComment();
-    
+
   };
 
   renderComments();
@@ -165,15 +165,15 @@ fetchTotal();
     }).then((response) => {
       response.json().then((responseData) => {
         const appComments = responseData.comments.map((comment) => {
-        return {
-          name: comment.author.name,
-          dateLast: currentDate,
-          text: comment.text,
-          likesQuantity: comment.likes,
-          likeColor: "like-button -no-active-like",
-          commentLike: false
-        }
-      });
+          return {
+            name: comment.author.name,
+            dateLast: currentDate,
+            text: comment.text,
+            likesQuantity: comment.likes,
+            likeColor: "like-button -no-active-like",
+            commentLike: false
+          }
+        });
         comments = responseData.comments;
         renderComments();
       });
@@ -184,6 +184,7 @@ fetchTotal();
     inputTextElement.value = "";
   });
 
+  renderComments();
 
   document.addEventListener("keyup", function (enter) {
     if (enter.keyCode == 13) {
