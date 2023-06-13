@@ -48,12 +48,12 @@
     jsonPromise.then((responseData) => {
       const appComments = responseData.comments.map((comment) => {
         return {
-          name: inputNameElement.value,
+          name: comment.author.name,
           dateLast: currentDate,
-          text: inputTextElement.value,
-          likesQuantity: 0,
-          commentLike: false,
-          likeColor: "like-button -no-active-like"
+          text: comment.text,
+          likesQuantity: comment.likes,
+          likeColor: "like-button -no-active-like",
+          commentLike: false
         }
       });
       comments = appComments;
@@ -107,22 +107,12 @@
     const commentsHtml = comments.map((comment, index) => {
       return `<li class="comment" data-index="${index}">
           <div class="comment-header">
-            <div>${comment.name
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")}</div>
+            <div>${comment.name}</div>
             <div>${comment.dateLast}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${comment.text
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-          .replaceAll("QUOTE_END", "</div>")}
+              ${comment.text}
             </div>
           </div>
           <div class="comment-footer">
@@ -171,6 +161,16 @@
       })
     }).then((response) => {
       response.json().then((responseData) => {
+        const appComments = responseData.comments.map((comment) => {
+        return {
+          name: comment.author.name,
+          dateLast: currentDate,
+          text: comment.text,
+          likesQuantity: comment.likes,
+          likeColor: "like-button -no-active-like",
+          commentLike: false
+        }
+      });
         comments = responseData.comments;
         renderComments();
       });
