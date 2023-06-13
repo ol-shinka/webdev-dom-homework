@@ -18,10 +18,11 @@
       <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
       <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
       <div class="add-form-row">
+        <button class="delete-button">Удалить комментарий</button>
         <button class="add-form-button">Написать</button>
       </div>
     </div>
-    <button class="delete-button">Удалить последний комментарий</button>
+ 
   </div>
 </body>
 
@@ -35,6 +36,32 @@
   const commentsElement = document.querySelector('.comments');
   const buttonElementDel = document.querySelector('.delete-button');
   const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
+
+
+  let commentsNew = [];
+
+  const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
+    method: "GET"
+  });
+
+  fetchPromise.then((response) => {
+    const jsonPromise = response.json();
+
+    jsonPromise.then((responseData) => {
+      const appComments = responseData.comments.map((comment) => {
+        return {
+          name: comment.author.name,
+          date: new Date(comment.date),
+          text: comment.text,
+          likes: comment.likes,
+          isLiked: false
+        }
+      });
+      commentsNew = appComments;
+      commentsNew = responseData.comments;
+      renderComments();
+    })
+  });
 
 
   const comments = [
@@ -70,7 +97,7 @@
           commentsElement.likesQuantity -= 1;
           commentsElement.commentLike = false;
           commentsElement.likeColor = "like-button -no-active-like";
-       
+
         } else {
           commentsElement.likesQuantity += 1;
           commentsElement.commentLike = true;
@@ -170,6 +197,21 @@
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
+
+  fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
+        method: "POST",
+        body: JSON.stringify({
+          text: inputTextElement.value,
+          name: inputNameElement.value
+        })
+      }).then((response) => {
+        response.json().then((responseData) => {
+          commentsNew = responseData.commentsNew;
+          renderComments();
+        });
+      });
+
+      renderComments();
 
   document.addEventListener("keyup", function (enter) {
     if (enter.keyCode == 13) {
