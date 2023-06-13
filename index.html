@@ -39,6 +39,7 @@
 
   let comments = [];
 
+function fetchTotal(){
   const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
     method: "GET"
   });
@@ -61,7 +62,8 @@
       renderComments();
     })
   });
-
+}
+fetchTotal();
 
   function initButtonLike() {
 
@@ -100,7 +102,7 @@
       });
     };
   };
-
+  fetchTotal();
   replyComment();
 
   const renderComments = () => {
@@ -128,6 +130,7 @@
     commentsElement.innerHTML = commentsHtml;
     initButtonLike();
     replyComment();
+    
   };
 
   renderComments();
@@ -176,6 +179,7 @@
       });
     });
     renderComments();
+    fetchTotal();
     inputNameElement.value = "";
     inputTextElement.value = "";
   });
