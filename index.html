@@ -84,8 +84,8 @@
           commentsElement.likesQuantity += 1;
           commentsElement.commentLike = true;
           commentsElement.likeColor = "like-button -active-like";
-          renderComments();
         }
+        renderComments();
       })
     }
   };
@@ -109,13 +109,22 @@
     const commentsHtml = comments.map((comment, index) => {
       return `<li class="comment" data-index="${index}">
           <div class="comment-header">
-            <div>${comment.name}</div>
+            <div>${comment.name
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")}</div>
             <div>${comment.dateLast}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${comment.text}
-            </div>
+              ${comment.text.
+          replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+          .replaceAll("QUOTE_END", "</div>")}</div>
           </div>
           <div class="comment-footer">
             <div class="likes">
