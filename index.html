@@ -172,26 +172,16 @@
         text: inputTextElement.value
       })
     }).then((response) => {
-      response.json().then((responseData) => {
-        const appComments = responseData.comments.map((comment) => {
-          return {
-            name: comment.author.name,
-            dateLast: currentDate,
-            text: comment.text,
-            likesQuantity: comment.likes,
-            likeColor: "like-button -no-active-like",
-            commentLike: false
-          }
-        });
-        comments = responseData.comments;
-        renderComments();
-      });
+      response.json().then();
+      fetchTotal();
     });
     renderComments();
-    fetchTotal();
-    inputNameElement.value = "";
-    inputTextElement.value = "";
   });
+
+  renderComments();
+  fetchTotal();
+  inputNameElement.value = "";
+  inputTextElement.value = "";
 
   renderComments();
 
