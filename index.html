@@ -174,16 +174,13 @@
     }).then((response) => {
       response.json().then();
       fetchTotal();
-    });
-    renderComments();
+    })
   });
 
-  renderComments();
-  fetchTotal();
+
   inputNameElement.value = "";
   inputTextElement.value = "";
 
-  renderComments();
 
   document.addEventListener("keyup", function (enter) {
     if (enter.keyCode == 13) {
