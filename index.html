@@ -30,6 +30,7 @@
 
   "use strict";
 
+  const inputComment = document.querySelector('.add-form');
   const inputNameElement = document.querySelector('.add-form-name');
   const inputTextElement = document.querySelector('.add-form-text');
   const buttonElement = document.querySelector('.add-form-button');
@@ -165,6 +166,12 @@
   buttonElement.addEventListener("click", () => {
     buttonElement.setAttribute('disabled', true);
 
+    commentsElement.disabled = true;
+    commentsElement.textContent = "Страница загружается, подождите...";
+
+    buttonElement.disabled = true;
+    buttonElement.textContent = "Коммент добавляется...";
+
     fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
       method: "POST",
       body: JSON.stringify({
@@ -174,6 +181,10 @@
     }).then((response) => {
       response.json().then();
       fetchTotal();
+      commentsElement.disabled = false;
+     
+      buttonElement.disabled = false;
+      buttonElement.textContent = "Написать";
     })
   });
 
