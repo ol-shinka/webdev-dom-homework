@@ -60,7 +60,6 @@
           }
         });
         comments = appComments;
-        //comments = responseData.comments;
         return renderComments();
       }).then((response) => {
         loaderBody.style.display = "none";
@@ -203,14 +202,8 @@
   });
 
   buttonElementDel.addEventListener("click", () => {
-
-    //const lastElement = commentsElement.lastIndexOf(commentElement)
     comments.pop();
-
     renderComments();
-
-    //const lastElement = commentsElement.lastElementChild;
-    //lastElement.remove();
   });
 
 </script>
