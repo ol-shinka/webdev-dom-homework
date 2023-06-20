@@ -183,16 +183,16 @@
     }).then((response) => {
       response.json().then();
       fetchTotal();
-      commentsElement.disabled = false;
-     
+      inputNameElement.value = "";
+      inputTextElement.value = "";
+
       buttonElement.disabled = false;
       buttonElement.textContent = "Написать";
     })
   });
 
 
-  inputNameElement.value = "";
-  inputTextElement.value = "";
+
 
 
   document.addEventListener("keyup", function (enter) {
