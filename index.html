@@ -15,7 +15,8 @@
       <!-- Список рендерится из JS -->
 
     </ul>
-    <div class="add-form">
+    <div class="loader">Пожалуйста подождите, комментарий добавляется..</div>
+    <div class="add-form"> 
       <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
       <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
       <div class="add-form-row">
@@ -66,6 +67,7 @@
       })
     });
   }
+  
   fetchTotal();
 
   function initButtonLike() {
@@ -181,8 +183,11 @@
         text: inputTextElement.value
       })
     }).then((response) => {
-      response.json().then();
+      response.json().then((response) => {
+        loaderBody.style.display = "none";
+      });
       fetchTotal();
+      
       inputNameElement.value = "";
       inputTextElement.value = "";
 
@@ -190,8 +195,6 @@
       buttonElement.textContent = "Написать";
     })
   });
-
-
 
 
 
