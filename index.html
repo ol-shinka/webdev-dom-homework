@@ -183,16 +183,16 @@
         text: inputTextElement.value
       })
     }).then((response) => {
-      response.json().then((response) => {
-        addForm.style.display = "none";
-      });
+      response.json().then();
+      
+      buttonElement.disabled = false;
+      buttonElement.textContent = "Написать";
+
       fetchTotal();
       
       inputNameElement.value = "";
       inputTextElement.value = "";
 
-      buttonElement.disabled = false;
-      buttonElement.textContent = "Написать";
     })
   });
 
