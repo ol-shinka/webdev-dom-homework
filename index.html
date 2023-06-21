@@ -15,7 +15,6 @@
       <!-- Список рендерится из JS -->
 
     </ul>
-    <div class="loader">Пожалуйста подождите, комментарий добавляется..</div>
     <div class="add-form"> 
       <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
       <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
@@ -32,6 +31,7 @@
 
   "use strict";
 
+  const addForm = document.querySelector('.add-form');
   const loaderBody = document.querySelector('.loader');
   const inputNameElement = document.querySelector('.add-form-name');
   const inputTextElement = document.querySelector('.add-form-text');
@@ -184,7 +184,7 @@
       })
     }).then((response) => {
       response.json().then((response) => {
-        loaderBody.style.display = "none";
+        addForm.style.display = "none";
       });
       fetchTotal();
       
