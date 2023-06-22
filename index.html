@@ -40,6 +40,8 @@
   const buttonElementDel = document.querySelector('.delete-button');
   const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
 
+  //commentElement.textContent = 'Пожалуйста подождите, страница загружается...';
+
   let comments = [];
 
   function fetchTotal() {
