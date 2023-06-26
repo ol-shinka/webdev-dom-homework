@@ -1,12 +1,14 @@
 "use strict";
 
-import {dateGet} from "./Date.js";
+import { dateGet } from "./Date.js";
 import renderComments from "./render.js";
-import {getCommentsList} from "./getCommentsList.js";
+import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";
-export {comments, inputNameElement, inputTextElement};
+import { fetchTotalGet } from "./fetchGetPost(api).js";
+export { comments, inputNameElement, inputTextElement, initButtonLike, replyComment };
 
 const listComments = document.getElementById('listComments');
+const addForm = document.querySelector('.add-form');
 const loaderBody = document.querySelector('.loader');
 const inputNameElement = document.querySelector('.add-form-name');
 const inputTextElement = document.querySelector('.add-form-text');
@@ -18,32 +20,28 @@ const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', m
 
 let comments = [];
 
-function fetchTotalGet() {
-    return fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
-      method: "GET"
+function get(modulFetch) {
+  return modulFetch()
+    .then((responseData) => {
+      const appComments = responseData.comments.map((comment) => {
+        return {
+          name: comment.author.name,
+          text: comment.text,
+          lastDate: dateGet(new Date(comment.date)),
+          likesQuantity: comment.likes,
+          likeColor: "like-button -no-active-like",
+          commentLike: false
+        }
+      });
+      comments = appComments;
+      return renderComments(listComments, getCommentsList, comments)
     })
-      .then((response) => {
-        return response.json()
-      })
-      .then((responseData) => {
-        const appComments = responseData.comments.map((comment) => {
-          return {
-            name: comment.author.name,
-            dateLast: dateGet(new Date(comment.date)),
-            text: comment.text,
-            likesQuantity: comment.likes,
-            likeColor: "like-button -no-active-like",
-            commentLike: false
-          }
-        });
-        comments = appComments;
-        return renderComments();
-      }).then((response) => {
-        loaderBody.style.display = "none";
-      })
-  };
+    .then(() => {
+      document.body.classList.add('loader');
+    });
+};
 
-fetchTotalGet();
+get(fetchTotalGet);
 
 function initButtonLike() {
 
@@ -88,37 +86,37 @@ replyComment();
 //const renderComments = () => {
 //  const commentsHtml = comments.map((comment, index) => {
 //    return `<li class="comment" data-index="${index}">
- //       <div class="comment-header">
-  //        <div>${comment.name
-  //      .replaceAll("&", "&amp;")
+//       <div class="comment-header">
+//        <div>${comment.name
+//      .replaceAll("&", "&amp;")
 //        .replaceAll("<", "&lt;")
-  //      .replaceAll(">", "&gt;")
-  //      .replaceAll('"', "&quot;")}</div>
-  //        <div>${comment.dateLast}</div>
-  //      </div>
-  //      <div class="comment-body">
- //         <div class="comment-text">
-  //          ${comment.text.
-  //      replaceAll("&", "&amp;")
-  //      .replaceAll("<", "&lt;")
-  //      .replaceAll(">", "&gt;")
-   //     .replaceAll('"', "&quot;")
-   //     .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-  //      .replaceAll("QUOTE_END", "</div>")}</div>
-  //      </div>
-  //      <div class="comment-footer">
-   //       <div class="likes">
-   //         <span class="likes-counter"> ${comment.likesQuantity}</span>
-   //         <button data-index="${index}" class="${comment.likeColor}"></button>
-  //        </div>
-  //      </div>
-  //  
-  //    </li>`;
+//      .replaceAll(">", "&gt;")
+//      .replaceAll('"', "&quot;")}</div>
+//        <div>${comment.dateLast}</div>
+//      </div>
+//      <div class="comment-body">
+//         <div class="comment-text">
+//          ${comment.text.
+//      replaceAll("&", "&amp;")
+//      .replaceAll("<", "&lt;")
+//      .replaceAll(">", "&gt;")
+//     .replaceAll('"', "&quot;")
+//     .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+//      .replaceAll("QUOTE_END", "</div>")}</div>
+//      </div>
+//      <div class="comment-footer">
+//       <div class="likes">
+//         <span class="likes-counter"> ${comment.likesQuantity}</span>
+//         <button data-index="${index}" class="${comment.likeColor}"></button>
+//        </div>
+//      </div>
+//  
+//    </li>`;
 //  }).join("");
 
- // commentsElement.innerHTML = commentsHtml;
- // initButtonLike();
- // replyComment();
+// commentsElement.innerHTML = commentsHtml;
+// initButtonLike();
+// replyComment();
 
 //};
 
@@ -147,57 +145,46 @@ buttonElement.addEventListener("click", () => {
 
   buttonElement.disabled = true;
   buttonElement.textContent = "Коммент добавляется...";
-  
 
-  function fetchTotalPost () {
-    fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
-      method: "POST",
-      body: JSON.stringify({
-        name: inputNameElement.value,
-        text: inputTextElement.value,
-        forceError: true
+
+  function post(modulFetch) {
+    return modulFetch()
+      .then((response) => {
+        return get(fetchTotalGet);
       })
-    }).then((response) => {
-      if (response.status === 500) {
-        throw new Error("Сервер не отвечает");
-      }
-      if (response.status === 400) {
-        throw new Error("Некорректный запрос");
-      }
-      return fetchTotalGet();
-      inputNameElement.value = "";
-      inputTextElement.value = "";
-      buttonElement.disabled = false;
-      buttonElement.textContent = "Написать";
-    }).then((response) => {
-      buttonElement.disabled = false;
-      buttonElement.textContent = "Написать";
-    })
+      .then(() => {
+        addForm.style.display = "none";
+        loaderBody.style.display = "none";
+        inputNameElement.value = "";
+        inputTextElement.value = "";
+      })
       .catch((error) => {
-        if (error.message === "Сервер не отвечает") {
-          alert("Ой, что-то пошло не так, попробуй позже");
-          return;
+        if (error.message === "Сервер упал") {
+          alert("Сервер упал, пожалуйста, попробуйте позже");
+          postData(fetchTotalPost);
+        } else if (error.message === "Некорректный запрос") {
+          alert("Имя и комментарий должны содержать не менее 3 символов");
+        } else {
+          alert("Кажется, что-то с интернетом, попробуйте позже");
+          console.log(error);
         }
-        if (error.message === "Некорректный запрос") {
-          alert("Имя должно содержать не менее 3 символов, исправь данные и попробуй снова");
-          return;
-        }
-        console.log(error);
+        addForm.style.display = "none";
+        loaderBody.style.display = "none";
       });
+  };
+
+  post(fetchTotalPost);
+
+  document.addEventListener("keyup", function (enter) {
+    if (enter.keyCode == 13) {
+      buttonElement.click();
+    }
+  });
+
+  buttonElementDel.addEventListener("click", () => {
+    comments.pop();
     renderComments();
-  }
-});
-fetchTotalPost();
+  })
+})
 
 
-
-document.addEventListener("keyup", function (enter) {
-  if (enter.keyCode == 13) {
-    buttonElement.click();
-  }
-});
-
-buttonElementDel.addEventListener("click", () => {
-  comments.pop();
-  renderComments();
-});
