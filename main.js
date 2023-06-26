@@ -3,6 +3,7 @@
 import {dateGet} from "./Date.js";
 import renderComments from "./render.js";
 import {getCommentsList} from "./getCommentsList.js";
+export {commentsElement};
 
 const listComments = document.getElementById('listComments');
 const loaderBody = document.querySelector('.loader');
