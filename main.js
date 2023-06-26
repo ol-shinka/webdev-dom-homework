@@ -1,7 +1,7 @@
 "use strict";
 
 import { dateGet } from "./Date.js";
-import renderComments from "./render.js";
+//import renderComments from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";
 import { fetchTotalGet } from "./fetchGetPost(api).js";
@@ -83,42 +83,42 @@ const replyComment = () => {
 fetchTotalGet();
 replyComment();
 
-//const renderComments = () => {
-//  const commentsHtml = comments.map((comment, index) => {
-//    return `<li class="comment" data-index="${index}">
-//       <div class="comment-header">
-//        <div>${comment.name
-//      .replaceAll("&", "&amp;")
-//        .replaceAll("<", "&lt;")
-//      .replaceAll(">", "&gt;")
-//      .replaceAll('"', "&quot;")}</div>
-//        <div>${comment.dateLast}</div>
-//      </div>
-//      <div class="comment-body">
-//         <div class="comment-text">
-//          ${comment.text.
-//      replaceAll("&", "&amp;")
-//      .replaceAll("<", "&lt;")
-//      .replaceAll(">", "&gt;")
-//     .replaceAll('"', "&quot;")
-//     .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-//      .replaceAll("QUOTE_END", "</div>")}</div>
-//      </div>
-//      <div class="comment-footer">
-//       <div class="likes">
-//         <span class="likes-counter"> ${comment.likesQuantity}</span>
-//         <button data-index="${index}" class="${comment.likeColor}"></button>
-//        </div>
-//      </div>
-//  
-//    </li>`;
-//  }).join("");
+const renderComments = () => {
+  const commentsHtml = comments.map((comment, index) => {
+    return `<li class="comment" data-index="${index}">
+      <div class="comment-header">
+        <div>${comment.name
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")}</div>
+        <div>${comment.dateLast}</div>
+      </div>
+      <div class="comment-body">
+         <div class="comment-text">
+          ${comment.text.
+        replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+        .replaceAll("QUOTE_END", "</div>")}</div>
+      </div>
+      <div class="comment-footer">
+       <div class="likes">
+         <span class="likes-counter"> ${comment.likesQuantity}</span>
+        <button data-index="${index}" class="${comment.likeColor}"></button>
+       </div>
+     </div>
+  
+    </li>`;
+  }).join("");
 
-// commentsElement.innerHTML = commentsHtml;
-// initButtonLike();
-// replyComment();
+  commentsElement.innerHTML = commentsHtml;
+  initButtonLike();
+  replyComment();
 
-//};
+};
 
 renderComments(getCommentsList, listComments);
 

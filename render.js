@@ -2,9 +2,9 @@ import {initButtonLike, replyComment} from "./main.js";
 
 export let comments = [];
 
-function renderComments(element, getCommentsList) {
+function renderComments(commentsElement, getCommentsList) {
     const commentsHTML = comments.map((comment, index) => getCommentsList(comment, index)).join('');
-    element.innerHTML = commentsHTML;
+    commentsElement.innerHTML = commentsHTML;
     initButtonLike();
     replyComment();
 }
