@@ -2,7 +2,7 @@ const getCommentsList = (comment, index) => {
     return `<li class="comment" data-index="${index}">
     <div class="comment-header">
       <div>${comment.name}</div>
-      <div>${comment.dateLast }</div>
+      <div>${comment.dateLast}</div>
     </div>
     <div class="comment-body">
     <div class="comment-text">${comment.text}</div>

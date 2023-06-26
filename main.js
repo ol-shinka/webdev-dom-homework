@@ -1,6 +1,6 @@
 "use strict";
 
-import { dateGet } from "./Date.js";
+import {dateGet} from "./Date.js";
 //import renderComments from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";
@@ -27,7 +27,7 @@ function get(moduleFetch) {
         return {
           name: comment.author.name,
           text: comment.text,
-          lastDate: dateGet(new Date(comment.date)),
+          dateLast: dateGet(new Date),
           likesQuantity: comment.likes,
           likeColor: "like-button -no-active-like",
           commentLike: false

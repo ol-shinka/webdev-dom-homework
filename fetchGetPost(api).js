@@ -28,7 +28,7 @@ function fetchTotalPost() {
         .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
         .replaceAll("QUOTE_END", "</div><br><br>,"),
       forceError: true,
-      lastDate: dateGet(new Date),
+      dateLast: dateGet(new Date),
       likesQuantity: comment.likes,
       likeColor: "like-button -no-active-like",
       commentLike: false
