@@ -36,9 +36,9 @@ function get(moduleFetch) {
       comments = appComments;
       return renderComments(listComments, getCommentsList, comments)
     })
-    //.then(() => {
-     // document.body.classList.add('loader');
-   // });
+  //.then(() => {
+  // document.body.classList.add('loader');
+  // });
 };
 
 get(fetchTotalGet);
@@ -171,12 +171,9 @@ buttonElement.addEventListener("click", () => {
           alert("Кажется, что-то с интернетом, попробуйте позже");
           console.log(error);
         }
-        
         loaderBody.style.display = "none";
       });
   };
-
-  post(fetchTotalPost);
 
   document.addEventListener("keyup", function (enter) {
     if (enter.keyCode == 13) {
@@ -187,7 +184,9 @@ buttonElement.addEventListener("click", () => {
   buttonElementDel.addEventListener("click", () => {
     comments.pop();
     renderComments();
-  })
-})
+  });
+  post(fetchTotalPost);
+});
+
 
 

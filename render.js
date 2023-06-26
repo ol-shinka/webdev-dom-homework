@@ -7,5 +7,6 @@ function renderComments(commentsElement, getCommentsList) {
     commentsElement.innerHTML = commentsHTML;
     initButtonLike();
     replyComment();
+    
 }
 export default renderComments();
