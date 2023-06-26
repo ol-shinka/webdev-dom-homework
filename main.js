@@ -1,7 +1,7 @@
 "use strict";
 
 import { dateGet } from "./Date.js";
-//import renderComments from "./render.js";
+import renderComments from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";
 import { fetchTotalGet } from "./fetchGetPost(api).js";
@@ -120,7 +120,9 @@ const renderComments = () => {
 
 };
 
-renderComments(getCommentsList, listComments);
+renderComments(getCommentsList, listComments, comments);
+loaderBody.style.display = "none";
+
 
 buttonElement.setAttribute('disabled', true);
 

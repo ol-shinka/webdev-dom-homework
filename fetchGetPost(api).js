@@ -36,18 +36,6 @@ function fetchTotalPost() {
   }).then((response) => {
     if (response.status === 500) {
       throw new Error("Сервер не отвечает");
-    }
-    if (response.status === 400) {
-      throw new Error("Некорректный запрос");
-    }
-    return fetchTotalGet();
-    //inputNameElement.value = "";
-    //inputTextElement.value = "";
-    //buttonElement.disabled = false;
-    //buttonElement.textContent = "Написать";
-  }).then((response) => {
-    if (response.status === 500) {
-      throw new Error("Сервер не отвечает");
     } else if (response.status === 400) {
       throw new Error("Некорректный запрос");
     }
@@ -56,6 +44,5 @@ function fetchTotalPost() {
     }
   })
 }
-
 
 export { fetchTotalGet, fetchTotalPost };
