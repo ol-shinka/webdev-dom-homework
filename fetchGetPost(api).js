@@ -25,8 +25,6 @@ function fetchTotalPost() {
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
-        .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-        .replaceAll("QUOTE_END", "</div><br></br>,")
     }),
     lastDate: dateGet(new Date),
     likesQuantity: 0,
