@@ -26,17 +26,13 @@ function fetchTotalPost() {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-        .replaceAll("QUOTE_END", "</div><br><br>,"),
-      forceError: true,
-      dateLast: dateGet(new Date),
-      likesQuantity: comment.likes,
-      likeColor: "like-button -no-active-like",
-      commentLike: false
+        .replaceAll("QUOTE_END", "</div><br><br>,")
     }),
     lastDate: dateGet(new Date(comment.date)),
     likesQuantity: comment.likes,
     likeColor: "like-button -no-active-like",
-    commentLike: false
+    commentLike: false,
+    forceError: true
   }).then((response) => {
     if (response.status === 500) {
       throw new Error("Сервер не отвечает");
