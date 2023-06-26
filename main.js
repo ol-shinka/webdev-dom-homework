@@ -3,7 +3,8 @@
 import {dateGet} from "./Date.js";
 import renderComments from "./render.js";
 import {getCommentsList} from "./getCommentsList.js";
-export {comments};
+import { fetchTotalPost } from "./fetchGetPost(api).js";
+export {comments, inputNameElement, inputTextElement};
 
 const listComments = document.getElementById('listComments');
 const loaderBody = document.querySelector('.loader');
@@ -81,7 +82,7 @@ const replyComment = () => {
     });
   };
 };
-fetchTotal();
+fetchTotalGet();
 replyComment();
 
 //const renderComments = () => {
@@ -148,42 +149,45 @@ buttonElement.addEventListener("click", () => {
   buttonElement.textContent = "Коммент добавляется...";
   
 
-  fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
-    method: "POST",
-    body: JSON.stringify({
-      name: inputNameElement.value,
-      text: inputTextElement.value,
-      forceError: true
+  function fetchTotalPost () {
+    fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
+      method: "POST",
+      body: JSON.stringify({
+        name: inputNameElement.value,
+        text: inputTextElement.value,
+        forceError: true
+      })
+    }).then((response) => {
+      if (response.status === 500) {
+        throw new Error("Сервер не отвечает");
+      }
+      if (response.status === 400) {
+        throw new Error("Некорректный запрос");
+      }
+      return fetchTotalGet();
+      inputNameElement.value = "";
+      inputTextElement.value = "";
+      buttonElement.disabled = false;
+      buttonElement.textContent = "Написать";
+    }).then((response) => {
+      buttonElement.disabled = false;
+      buttonElement.textContent = "Написать";
     })
-  }).then((response) => {
-    if (response.status === 500) {
-      throw new Error("Сервер не отвечает");
-    }
-    if (response.status === 400) {
-      throw new Error("Некорректный запрос");
-    }
-    return fetchTotal();
-    inputNameElement.value = "";
-    inputTextElement.value = "";
-    buttonElement.disabled = false;
-    buttonElement.textContent = "Написать";
-  }).then((response) => {
-    buttonElement.disabled = false;
-    buttonElement.textContent = "Написать";
-  })
-    .catch((error) => {
-      if (error.message === "Сервер не отвечает") {
-        alert("Ой, что-то пошло не так, попробуй позже");
-        return;
-      }
-      if (error.message === "Некорректный запрос") {
-        alert("Имя должно содержать не менее 3 символов, исправь данные и попробуй снова");
-        return;
-      }
-      console.log(error);
-    });
-  renderComments();
+      .catch((error) => {
+        if (error.message === "Сервер не отвечает") {
+          alert("Ой, что-то пошло не так, попробуй позже");
+          return;
+        }
+        if (error.message === "Некорректный запрос") {
+          alert("Имя должно содержать не менее 3 символов, исправь данные и попробуй снова");
+          return;
+        }
+        console.log(error);
+      });
+    renderComments();
+  }
 });
+fetchTotalPost();
 
 
 
