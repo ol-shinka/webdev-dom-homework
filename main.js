@@ -3,7 +3,7 @@
 import {dateGet} from "./Date.js";
 import renderComments from "./render.js";
 import {getCommentsList} from "./getCommentsList.js";
-export {commentsElement};
+export {comments};
 
 const listComments = document.getElementById('listComments');
 const loaderBody = document.querySelector('.loader');
@@ -17,7 +17,7 @@ const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', m
 
 let comments = [];
 
-function fetchTotal() {
+function fetchTotalGet() {
     return fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
       method: "GET"
     })
@@ -42,7 +42,7 @@ function fetchTotal() {
       })
   };
 
-fetchTotal(comments);
+fetchTotalGet();
 
 function initButtonLike() {
 
