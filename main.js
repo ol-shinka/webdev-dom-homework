@@ -1,11 +1,11 @@
 "use strict";
 
 import { dateGet } from "./Date.js";
-import renderComments from "./render.js";
+//import renderComments from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";
 import { fetchTotalGet } from "./fetchGetPost(api).js";
-export { comments, inputNameElement, inputTextElement, initButtonLike, replyComment };
+export { comments, inputNameElement, inputTextElement, initButtonLike, replyComment, dateGet };
 
 const listComments = document.getElementById('listComments');
 const addForm = document.querySelector('.add-form');
@@ -27,7 +27,7 @@ function get(moduleFetch) {
         return {
           name: comment.author.name,
           text: comment.text,
-          dateLast: dateGet(currentDate),
+          dateLast: dateGet(new Date(comment.dateLast)),
           likesQuantity: comment.likes,
           likeColor: "like-button -no-active-like",
           commentLike: false
@@ -36,9 +36,9 @@ function get(moduleFetch) {
       comments = appComments;
       return renderComments(listComments, getCommentsList, comments)
     })
-    .then(() => {
-      document.body.classList.add('loader');
-    });
+    //.then(() => {
+     // document.body.classList.add('loader');
+   // });
 };
 
 get(fetchTotalGet);
@@ -155,10 +155,11 @@ buttonElement.addEventListener("click", () => {
         return get(fetchTotalGet);
       })
       .then(() => {
-        addForm.style.display = "none";
         loaderBody.style.display = "none";
         inputNameElement.value = "";
         inputTextElement.value = "";
+        buttonElement.disabled = false;
+        buttonElement.textContent = "Написать";
       })
       .catch((error) => {
         if (error.message === "Сервер упал") {
@@ -170,7 +171,7 @@ buttonElement.addEventListener("click", () => {
           alert("Кажется, что-то с интернетом, попробуйте позже");
           console.log(error);
         }
-        addForm.style.display = "none";
+        
         loaderBody.style.display = "none";
       });
   };
