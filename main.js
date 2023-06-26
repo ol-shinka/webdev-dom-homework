@@ -27,7 +27,7 @@ function get(moduleFetch) {
         return {
           name: comment.author.name,
           text: comment.text,
-          dateLast: dateGet(new Date),
+          dateLast: dateGet(new Date(comment.date)),
           likesQuantity: comment.likes,
           likeColor: "like-button -no-active-like",
           commentLike: false
