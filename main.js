@@ -27,7 +27,7 @@ function get(moduleFetch) {
         return {
           name: comment.author.name,
           text: comment.text,
-          dateLast: dateGet(new Date(comment.dateLast)),
+          dateLast: dateGet(new Date),
           likesQuantity: comment.likes,
           likeColor: "like-button -no-active-like",
           commentLike: false
@@ -180,12 +180,12 @@ buttonElement.addEventListener("click", () => {
       buttonElement.click();
     }
   });
-
-  buttonElementDel.addEventListener("click", () => {
-    comments.pop();
-    renderComments();
-  });
   post(fetchTotalPost);
+});
+
+buttonElementDel.addEventListener("click", () => {
+  comments.pop();
+  renderComments();
 });
 
 
