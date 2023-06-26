@@ -1,6 +1,6 @@
 "use strict";
 
-import {dateGet} from "./Date.js";
+import { dateGet } from "./Date.js";
 //import renderComments from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";

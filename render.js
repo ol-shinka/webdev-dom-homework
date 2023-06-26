@@ -1,4 +1,4 @@
-import {initButtonLike, replyComment} from "./main.js";
+import { initButtonLike, replyComment } from "./main.js";
 
 export let comments = [];
 
