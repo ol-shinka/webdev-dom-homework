@@ -20,8 +20,8 @@ const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', m
 
 let comments = [];
 
-function get(modulFetch) {
-  return modulFetch()
+function get(moduleFetch) {
+  return moduleFetch()
     .then((responseData) => {
       const appComments = responseData.comments.map((comment) => {
         return {
@@ -147,8 +147,8 @@ buttonElement.addEventListener("click", () => {
   buttonElement.textContent = "Коммент добавляется...";
 
 
-  function post(modulFetch) {
-    return modulFetch()
+  function post(moduleFetch) {
+    return moduleFetch()
       .then((response) => {
         return get(fetchTotalGet);
       })
