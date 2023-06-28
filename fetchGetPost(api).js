@@ -1,9 +1,12 @@
 import { inputNameElement, inputTextElement } from "./main.js";
 import { dateGet } from "./Date.js";
 
+let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
+let host = "https://wedev-api.sky.pro/api/v2/:ol-shinka/comments";
+
 function fetchTotalGet() {
-  return fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
-    method: "GET"
+  return fetch(host, {
+    method: "GET",
   })
     .then((response) => {
       return response.json()
@@ -12,7 +15,7 @@ function fetchTotalGet() {
 
 
 function fetchTotalPost() {
-  return fetch("https://wedev-api.sky.pro/api/v1/:ol-shinka/comments", {
+  return fetch(host, {
     method: "POST",
     body: JSON.stringify({
       name: inputNameElement.value
