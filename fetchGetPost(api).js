@@ -39,7 +39,7 @@ function fetchTotalPost() {
     likesQuantity: 0,
     likeColor: "like-button -no-active-like",
     commentLike: false,
-    forceError: true
+    //forceError: true
   }).then((response) => {
     if (response.status === 500) {
       throw new Error("Сервер не отвечает");

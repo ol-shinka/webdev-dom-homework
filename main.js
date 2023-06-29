@@ -1,7 +1,7 @@
 "use strict";
 
 import { dateGet } from "./Date.js";
-//import renderComments from "./render.js";
+//import renderApp from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalPost } from "./fetchGetPost(api).js";
 import { fetchTotalGet } from "./fetchGetPost(api).js";
@@ -9,7 +9,7 @@ export { comments, initButtonLike, replyComment, dateGet };
 
 const listComments = document.getElementById('listComments');
 const addForm = document.querySelector('.add-form');
-
+let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8"
 //inputNameElement, inputTextElement
 
 const commentsElement = document.querySelector('.comments');
@@ -84,25 +84,41 @@ replyComment();
 
 const renderApp = () => {
   const appEl = document.getElementById("app");
-  const commentsHtml = comments.map((comment, index) => {
-    return `<li class="comment" data-index="${index}">
+  if (!token) {
+    const appHtml = `<div class="add-form-authorization">
+    <div class="authorization-form">
+      <input type="login" class="add-form-login" placeholder="Введите Ваш логин">
+      <input type="password" class="add-form-password" placeholder="Введите Ваш пароль">
+      <button class="enter-button">Войти</button>
+      <button class="reg-button">Зарегистрироваться</button>
+    </div>
+  </div>`
+    appEl.innerHTML = appHtml;
+    document.querySelectorAll(".enter-button").addEventListener("click", () => {
+  let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
+  fetchTotalGet();
+})
+return;
+  }
+const commentsHtml = comments.map((comment, index) => {
+  return `<li class="comment" data-index="${index}">
       <div class="comment-header">
         <div>${comment.name
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")}</div>
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")}</div>
         <div>${comment.dateLast}</div>
       </div>
       <div class="comment-body">
          <div class="comment-text">
           ${comment.text.
-        replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-        .replaceAll("QUOTE_END", "</div>")}</div>
+      replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
+      .replaceAll("QUOTE_END", "</div>")}</div>
       </div>
       <div class="comment-footer">
        <div class="likes">
@@ -112,8 +128,8 @@ const renderApp = () => {
      </div>
   
     </li>`;
-  }).join("");
-  const appHtml = `<div class="container">
+}).join("");
+const appHtml = `<div class="container">
   <div class="loader">Пожалуйста подождите, страница загружается...</div>
   <ul class="comments" id="listComments">
 
@@ -123,14 +139,6 @@ const renderApp = () => {
 
   </ul>
   <p class="authorization-text">Чтобы оставить комментарий, <a class="authorization-link" href="#">авторизуйтесь</a></p>
-  <div class="add-form-authorization">
-    <div class="authorization-form">
-      <input type="login" class="add-form-login" placeholder="Введите Ваш логин">
-      <input type="password" class="add-form-password" placeholder="Введите Ваш пароль">
-      <button class="delete-button">Войти</button>
-      <button class="delete-button">Зарегистрироваться</button>
-    </div>
-  </div>
   <div class="add-form">
     <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
     <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
@@ -141,51 +149,51 @@ const renderApp = () => {
   </div>
 </div>`
 
-  appEl.innerHTML = appHtml;
-  const loaderBody = document.querySelector('.loader');
-  loaderBody.style.display = "none";
-  initButtonLike();
-  replyComment();
-  const buttonElement = document.querySelector('.add-form-button');
+
+const loaderBody = document.querySelector('.loader');
+loaderBody.style.display = "none";
+initButtonLike();
+replyComment();
+const buttonElement = document.querySelector('.add-form-button');
+buttonElement.setAttribute('disabled', true);
+const inputNameElement = document.querySelector('.add-form-name');
+const inputTextElement = document.querySelector('.add-form-text');
+const buttonElementDel = document.querySelector('.delete-button');
+
+inputNameElement.addEventListener("input", () => {
   buttonElement.setAttribute('disabled', true);
-  const inputNameElement = document.querySelector('.add-form-name');
-  const inputTextElement = document.querySelector('.add-form-text');
-  const buttonElementDel = document.querySelector('.delete-button');
-  
-  inputNameElement.addEventListener("input", () => {
-    buttonElement.setAttribute('disabled', true);
-  
-    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-      buttonElement.removeAttribute('disabled');
+
+  if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+    buttonElement.removeAttribute('disabled');
+  }
+});
+
+inputTextElement.addEventListener("input", () => {
+
+  buttonElement.setAttribute('disabled', true);
+  if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
+    buttonElement.removeAttribute('disabled');
+  }
+});
+
+buttonElement.addEventListener("click", () => {
+  buttonElement.setAttribute('disabled', true);
+
+  buttonElement.disabled = true;
+  buttonElement.textContent = "Коммент добавляется...";
+
+  document.addEventListener("keyup", function (enter) {
+    if (enter.keyCode == 13) {
+      buttonElement.click();
     }
   });
-  
-  inputTextElement.addEventListener("input", () => {
-  
-    buttonElement.setAttribute('disabled', true);
-    if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-      buttonElement.removeAttribute('disabled');
-    }
-  });
-  
-  buttonElement.addEventListener("click", () => {
-    buttonElement.setAttribute('disabled', true);
-  
-    buttonElement.disabled = true;
-    buttonElement.textContent = "Коммент добавляется...";
-  
-    document.addEventListener("keyup", function (enter) {
-      if (enter.keyCode == 13) {
-        buttonElement.click();
-      }
-    });
-    post(fetchTotalPost);
-  });
-  
-  buttonElementDel.addEventListener("click", () => {
-    comments.pop();
-    renderApp();
-  });
+  post(fetchTotalPost);
+});
+
+buttonElementDel.addEventListener("click", () => {
+  comments.pop();
+  renderApp();
+});
 };
 
 renderApp(getCommentsList, listComments, comments);
