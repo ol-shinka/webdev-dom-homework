@@ -33,7 +33,7 @@ function get(moduleFetch) {
         }
       });
       comments = appComments;
-      return renderComments(listComments, getCommentsList, comments)
+      return renderApp(listComments, getCommentsList, comments)
     })
   //.then(() => {
   // document.body.classList.add('loader');
@@ -62,7 +62,7 @@ function initButtonLike() {
         commentsElement.commentLike = true;
         commentsElement.likeColor = "like-button -active-like";
       }
-      renderComments();
+      renderApp();
     })
   }
 };
@@ -82,7 +82,7 @@ const replyComment = () => {
 fetchTotalGet();
 replyComment();
 
-const renderComments = () => {
+const renderApp = () => {
   const appEl = document.getElementById("app");
   const commentsHtml = comments.map((comment, index) => {
     return `<li class="comment" data-index="${index}">
@@ -184,16 +184,16 @@ const renderComments = () => {
   
   buttonElementDel.addEventListener("click", () => {
     comments.pop();
-    renderComments();
+    renderApp();
   });
 };
 
-renderComments(getCommentsList, listComments, comments);
+renderApp(getCommentsList, listComments, comments);
 
 
 function post(moduleFetch) {
   return moduleFetch()
-    .then((response) => {
+    .then(() => {
       return get(fetchTotalGet);
     })
     .then(() => {
