@@ -1,4 +1,3 @@
-import { renderApp, inputNameElement, inputTextElement } from "./main.js";
 import { dateGet } from "./Date.js";
 
 let host = "https://wedev-api.sky.pro/api/v2/:ol-shinka/comments";

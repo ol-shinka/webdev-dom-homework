@@ -5,7 +5,7 @@ import renderApp from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalGet } from "./fetchGetPost(api).js";
 
-function get(moduleFetch) {
+export function get(moduleFetch) {
   return moduleFetch()
     .then((responseData) => {
       const appComments = responseData.comments.map((comment) => {
