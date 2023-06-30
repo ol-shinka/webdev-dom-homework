@@ -5,11 +5,6 @@ import renderApp from "./render.js";
 import { getCommentsList } from "./getCommentsList.js";
 import { fetchTotalGet } from "./fetchGetPost(api).js";
 
-let comments = [];
-const appEl = document.getElementById("app");
-let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
-token = null;
-
 export function get(moduleFetch) {
   return moduleFetch()
     .then((responseData) => {

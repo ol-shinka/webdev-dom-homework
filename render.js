@@ -7,13 +7,11 @@ let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
 token = null;
 const listComments = document.getElementById('listComments');
 
-function renderApp(comments, getCommentsList, element, token) {
+function renderApp() {
     const appEl = document.getElementById("app");
-    if(!token){
+    if (!token) {
         const appHtml = ` <div class="loader">Пожалуйста подождите, страница загружается...</div>
         <div class="container">
-        <ul class="comments" id="listComments"></ul>
-    
         <p class="authorization-text">Чтобы оставить комментарий, <a class="authorization-link" href="#">авторизуйтесь</a></p>
         <div class="add-form-authorization">
           <div class="authorization-form">
@@ -26,15 +24,37 @@ function renderApp(comments, getCommentsList, element, token) {
         `; appEl.innerHTML = appHtml;
         document.querySelector('.enter-button').addEventListener('click', () => {
             token =
-              "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
-              fetchTotalGet();
+                "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
+            fetchTotalGet();
         });
         return
     }
-    
+
     const commentsHTML = comments.map((comment, index) => getCommentsList(comment, index)).join('');
 
-    element.innerHTML = appHtml;
+    const appHtml = `
+    <ul class="comments" id="listComments"></ul>
+    ${commentsHTML}
+    <div class="add-form-authorization">
+    <div class="authorization-form">
+      <input type="login" class="add-form-login" placeholder="Введите логин">
+      <input type="password" class="add-form-password" placeholder="Введите пароль">
+      <button class="reg-button">Зарегистрироваться</button>
+    </div>
+  </div>
+
+  <div class="add-form">
+    <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
+    <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
+    <div class="add-form-row">
+      <button class="delete-button">Удалить комментарий</button>
+      <button class="add-form-button">Написать</button>
+    </div>
+  </div>
+</div>
+`
+
+    appEl.innerHTML = appHtml;
 
 
     const addForm = document.querySelector('.add-form');
