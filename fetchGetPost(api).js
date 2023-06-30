@@ -1,15 +1,16 @@
-//import { inputNameElement, inputTextElement } from "./main.js";
+import { renderApp, inputNameElement, inputTextElement } from "./main.js";
 import { dateGet } from "./Date.js";
 
-let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
 let host = "https://wedev-api.sky.pro/api/v2/:ol-shinka/comments";
+let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
 
-function fetchTotalGet() {
+
+function fetchTotalGet(token) {
   return fetch(host, {
     method: "GET",
     headers: {
       Authorization: token,
-    },
+    }
   })
     .then((response) => {
       return response.json()
@@ -17,7 +18,7 @@ function fetchTotalGet() {
 };
 
 
-function fetchTotalPost() {
+function fetchTotalPost(token, inputNameElement, inputTextElement) {
   return fetch(host, {
     method: "POST",
     headers: {
@@ -39,7 +40,7 @@ function fetchTotalPost() {
     likesQuantity: 0,
     likeColor: "like-button -no-active-like",
     commentLike: false,
-    //forceError: true
+    forceError: true
   }).then((response) => {
     if (response.status === 500) {
       throw new Error("Сервер не отвечает");
