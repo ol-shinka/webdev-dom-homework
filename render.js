@@ -1,180 +1,241 @@
-import { get } from "./main.js";
-import { fetchTotalGet, fetchTotalPost } from "./fetchGetPost(api).js";
-import { getCommentsList } from "./getCommentsList.js";
+import { fetchPost, fetchDelete, memoryLike } from "./api.js";
+import { getAPI } from "./script.js";
+import { renderLoginComponent } from "./components/login-component.js"
+import { getListComments } from "./listComments.js";
 
-export let comments = [];
-let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
-token = null;
-const listComments = document.getElementById('listComments');
+let token = null;
+let name = null;
 
-function renderApp() {
-    const appEl = document.getElementById("app");
-    if (!token) {
-        const appHtml = ` <div class="loader">Пожалуйста подождите, страница загружается...</div>
-        <div class="container">
-        <p class="authorization-text">Чтобы оставить комментарий, <a class="authorization-link" href="#">авторизуйтесь</a></p>
-        <div class="add-form-authorization">
-          <div class="authorization-form">
-            <input type="login" class="add-form-login" placeholder="Введите Ваш логин">
-            <input type="password" class="add-form-password" placeholder="Введите Ваш пароль">
-            <button class="enter-button">Войти</button>
-            <button class="reg-button">Зарегистрироваться</button>
-          </div>
-        </div>
-        `; appEl.innerHTML = appHtml;
-        document.querySelector('.enter-button').addEventListener('click', () => {
-            token =
-                "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
-            fetchTotalGet();
-        });
-        return
-    }
+const renderApp = (comments, listComments) => {
 
-    const commentsHTML = comments.map((comment, index) => getCommentsList(comment, index)).join('');
 
-    const appHtml = `
-    <ul class="comments" id="listComments"></ul>
-    ${commentsHTML}
-    <div class="add-form-authorization">
-    <div class="authorization-form">
-      <input type="login" class="add-form-login" placeholder="Введите логин">
-      <input type="password" class="add-form-password" placeholder="Введите пароль">
-      <button class="reg-button">Зарегистрироваться</button>
-    </div>
-  </div>
+  const appEl = document.getElementById('app');
 
+  if (!token) {
+    renderLoginComponent({
+      comments,
+      appEl,
+      setToken: (newToken) => {
+        token = newToken;
+      },
+      setName: (newName) => {
+        name = newName;
+      },
+      getAPI
+    });
+  } else {
+
+    const commentsHtml = comments.map((comment, index) => listComments(comment, index)).join("");
+
+    const appHTML = `<div class="container">
+
+  <ul class="comments">
+   ${commentsHtml}
+  </ul>
+
+  
   <div class="add-form">
-    <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
-    <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
+    <input type="text" class="add-form-name" value = "${name}" />
+    <textarea type="textarea" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
     <div class="add-form-row">
-      <button class="delete-button">Удалить комментарий</button>
       <button class="add-form-button">Написать</button>
+      <button class="delete-form-button">Удалить комментарий</button>
     </div>
   </div>
-</div>
-`
-
-    appEl.innerHTML = appHtml;
+  <div class="comment-loading">Коммент добавляется...</div>
+</div>`;
 
 
-    const addForm = document.querySelector('.add-form');
-    const loaderBody = document.querySelector('.loader');
+    appEl.innerHTML = appHTML;
+
+    const formCommentElement = document.querySelector('.add-form');
     const inputNameElement = document.querySelector('.add-form-name');
     const inputTextElement = document.querySelector('.add-form-text');
     const buttonElement = document.querySelector('.add-form-button');
     const commentsElement = document.querySelector('.comments');
-    const buttonElementDel = document.querySelector('.delete-button');
-    const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) + " " + new Date().toLocaleTimeString().slice(0, -3);
+    const buttonElementDel = document.querySelector('.delete-form-button');
+    const commentLoadingElement = document.querySelector('.comment-loading');
+    const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
+      " " + new Date().toLocaleTimeString().slice(0, -3);
+
+
+    //редактировать текст коммента
+
+    function changeComment() {
+      const editorButtonElements = document.querySelectorAll('.editor-button');
+      const commentsBodyElements = document.querySelectorAll('.comment-body');
+
+      inputNameElement.setAttribute('disabled', true);
+
+      for (const editorButtonElement of editorButtonElements) {
+
+        editorButtonElement.addEventListener("click", (event) => {
+          event.stopPropagation();
+
+          const editorButtonIndex = editorButtonElement.dataset.index;
+
+          if (editorButtonElement.textContent === 'Редактировать') {
+
+            editorButtonElement.textContent = 'Сохранить';
+
+            commentsBodyElements[editorButtonIndex].innerHTML = `<textarea class="comment-text">${comments[editorButtonIndex].text}</textarea>`;
+
+          } else {
+
+            comments[editorButtonIndex].text = editorButtonElement.closest('.comment').querySelector('textarea').value;
+            comments[editorButtonIndex].dateСreation = `${currentDate} (изменено)`;
+            renderApp(comments, getListComments)
+          }
+        }
+
+
+        )
+      }
+    }
+    changeComment();
+
+    // функция для имитации запросов в API
+
+    function delay(interval = 100) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, interval);
+      });
+    };
 
 
     function initButtonLike() {
 
-        const buttonLikes = document.querySelectorAll('.like-button');
+      const likesButton = document.querySelectorAll('.like-button');
+      for (const like of likesButton) {
+        like.addEventListener("click", (event) => {
+          const likeIndex = like.dataset.index;
+          const commentsElementLikeIndex = comments[likeIndex];
+          event.stopPropagation();
 
-        for (const like of buttonLikes) {
-            like.addEventListener("click", (event) => {
-                const likeIndex = like.dataset.index;
-                const commentsElement = comments[likeIndex];
-                event.stopPropagation();
+          if (commentsElementLikeIndex.likeComment) {
+            commentsElementLikeIndex.likesNumber -= 1;
+            commentsElementLikeIndex.likeComment = false;
+            commentsElementLikeIndex.propertyColorLike = 'like-button -no-active-like';
+          } else {
+            commentsElementLikeIndex.likesNumber += 1;
+            commentsElementLikeIndex.likeComment = true;
+            commentsElementLikeIndex.propertyColorLike = 'like-button -active-like';
+          }
 
-                if (commentsElement.commentLike) {
-                    commentsElement.likesQuantity -= 1;
-                    commentsElement.commentLike = false;
-                    commentsElement.likeColor = "like-button -no-active-like";
 
-                } else {
-                    commentsElement.likesQuantity += 1;
-                    commentsElement.commentLike = true;
-                    commentsElement.likeColor = "like-button -active-like";
-                }
-                renderApp();
-            })
-        }
+          const id = like.dataset.id;
+
+          memoryLike({ id, token });
+
+          delay(200).then(() => {
+            getAPI();
+          })
+
+        })
+      }
     };
 
     initButtonLike();
 
-    const replyComment = () => {
-        const commentElement = document.querySelectorAll(".comment");
+    function replyComment() {
+      let commentElements = document.querySelectorAll('.comment');
 
-        for (const comment of commentElement) {
-            comment.addEventListener("click", () => {
-                const index = comment.dataset.index;
-                inputTextElement.value = `QUOTE_BEGIN ${comments[index].text}\n${comments[index].name} QUOTE_END`;
-            });
-        };
+      for (const commentElement of commentElements) {
+        commentElement.addEventListener("click", () => {
+
+          const indexComment = commentElement.dataset.index;
+          let QUOTE_BEGIN = 'QUOTE_BEGIN';
+          let QUOTE_END = 'QUOTE_END';
+          inputTextElement.value =
+            `${QUOTE_BEGIN}${comments[indexComment].name}:\n${comments[indexComment].text}${QUOTE_END}\n\n`;
+        }
+        )
+      }
     };
-    fetchTotalGet();
+
     replyComment();
 
-    loaderBody.style.display = "none";
 
     buttonElement.setAttribute('disabled', true);
 
-    inputNameElement.addEventListener("input", () => {
-        buttonElement.setAttribute('disabled', true);
-
-        if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-            buttonElement.removeAttribute('disabled');
-        }
-    });
 
     inputTextElement.addEventListener("input", () => {
 
-        buttonElement.setAttribute('disabled', true);
-        if ((inputNameElement.value.length > 0) && (inputTextElement.value.length > 0)) {
-            buttonElement.removeAttribute('disabled');
-        }
+      buttonElement.setAttribute('disabled', true);
+
+      if (inputTextElement.value.length > 0) {
+
+        buttonElement.removeAttribute('disabled');
+      }
     });
 
-    buttonElement.addEventListener("click", () => {
-        buttonElement.setAttribute('disabled', true);
 
-        buttonElement.disabled = true;
-        buttonElement.textContent = "Коммент добавляется...";
+    const postData = () => {
 
+      return fetchPost(token, inputTextElement, inputNameElement)
+        .then((response) => {
+          return getAPI();
+        })
+        .then((data) => {
+          commentLoadingElement.classList.add('comment-loading');
+          formCommentElement.classList.remove('comment-loading');
 
-        function post(moduleFetch) {
-            return moduleFetch()
-                .then((response) => {
-                    return get(fetchTotalGet);
-                })
-                .then(() => {
-                    loaderBody.style.display = "none";
-                    inputNameElement.value = "";
-                    inputTextElement.value = "";
-                    buttonElement.disabled = false;
-                    buttonElement.textContent = "Написать";
-                })
-                .catch((error) => {
-                    if (error.message === "Сервер упал") {
-                        alert("Сервер упал, пожалуйста, попробуйте позже");
-                        postData(fetchTotalPost);
-                    } else if (error.message === "Некорректный запрос") {
-                        alert("Имя и комментарий должны содержать не менее 3 символов");
-                    } else {
-                        alert("Кажется, что-то с интернетом, попробуйте позже");
-                        console.log(error);
-                    }
-                    loaderBody.style.display = "none";
-                });
-        };
+          inputNameElement.value = "";
+          inputTextElement.value = "";
 
-        document.addEventListener("keyup", function (enter) {
-            if (enter.keyCode == 13) {
-                buttonElement.click();
+        })
+        .catch((error) => {
+
+          // В объекте error есть ключ message, в котором лежит сообщение об ошибке
+          // Если сервер сломался, то просим попробовать позже
+          if (error.message === "Сервер не отвечает") {
+            alert("Сервер не отвечает, попробуйте позже");
+            postData();
+          } else
+            // Если пользователь накосячил с запросом, просим поправить
+            if (error.message === "Некорретный запрос") {
+              alert("Имя и комментарий должны содержать не менее трех символов");
+            } else {
+              alert('Кажется, что-то с интернетом, попробуйте позже');
+              console.log(error);
             }
+
+          buttonElement.removeAttribute('disabled');
+          commentLoadingElement.classList.add('comment-loading');
+          formCommentElement.classList.remove('comment-loading');
+
+          console.log(error);
         });
-        post(fetchTotalPost);
+    };
+
+
+    buttonElement.addEventListener("click", () => {
+
+      commentLoadingElement.classList.remove('comment-loading');
+      formCommentElement.classList.add('comment-loading');
+      buttonElement.setAttribute('disabled', true);
+
+      //отпраляем новые данные 
+      postData(fetchPost);
+    });
+
+
+    document.addEventListener("keyup", function (event) {
+      if (event.shiftKey && (event.keyCode === 13)) {
+        //переносит на другую строку
+      } else if (event.keyCode === 13) {
+        buttonElement.click();
+      }
     });
 
     buttonElementDel.addEventListener("click", () => {
-        comments.pop();
-        renderApp();
+
+      comments.pop();
+      renderApp(comments, getListComments)
     });
-    initButtonLike();
-    replyComment();
-    renderApp(getCommentsList, listComments, comments);
-}
-renderApp(getCommentsList, listComments, comments);
-export default renderApp();
+  }
+};
+
+export default renderApp;
