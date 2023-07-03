@@ -180,14 +180,10 @@ const renderApp = (comments, listComments) => {
 
         })
         .catch((error) => {
-
-          // В объекте error есть ключ message, в котором лежит сообщение об ошибке
-          // Если сервер сломался, то просим попробовать позже
           if (error.message === "Сервер не отвечает") {
             alert("Сервер не отвечает, попробуйте позже");
             postData();
           } else
-            // Если пользователь накосячил с запросом, просим поправить
             if (error.message === "Некорретный запрос") {
               alert("Имя и комментарий должны содержать не менее трех символов");
             } else {
@@ -209,15 +205,12 @@ const renderApp = (comments, listComments) => {
       commentLoadingElement.classList.remove('comment-loading');
       formCommentElement.classList.add('comment-loading');
       buttonElement.setAttribute('disabled', true);
-
-      //отпраляем новые данные 
       postData(fetchPost);
     });
 
 
     document.addEventListener("keyup", function (event) {
       if (event.shiftKey && (event.keyCode === 13)) {
-        //переносит на другую строку
       } else if (event.keyCode === 13) {
         buttonElement.click();
       }
