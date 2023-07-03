@@ -68,27 +68,20 @@ const renderApp = (comments, listComments) => {
       inputNameElement.setAttribute('disabled', true);
 
       for (const editorButtonElement of editorButtonElements) {
-
         editorButtonElement.addEventListener("click", (event) => {
           event.stopPropagation();
 
           const editorButtonIndex = editorButtonElement.dataset.index;
 
           if (editorButtonElement.textContent === 'Редактировать') {
-
             editorButtonElement.textContent = 'Сохранить';
-
             commentsBodyElements[editorButtonIndex].innerHTML = `<textarea class="comment-text">${comments[editorButtonIndex].text}</textarea>`;
-
           } else {
-
             comments[editorButtonIndex].text = editorButtonElement.closest('.comment').querySelector('textarea').value;
             comments[editorButtonIndex].dateСreation = `${currentDate} (изменено)`;
             renderApp(comments, getListComments)
           }
         }
-
-
         )
       }
     }
