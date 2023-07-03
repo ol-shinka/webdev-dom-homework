@@ -128,9 +128,7 @@ let isLoginMode = true;
           name: name,
         })
         .then ((user) => {
-          console.log(user);
           setToken(`Bearer ${user.user.token}`);
-          
           //renderApp(comments, getListComments, token);
           getAPI();
         })

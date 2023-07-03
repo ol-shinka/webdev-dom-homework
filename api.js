@@ -53,7 +53,7 @@ export const fetchPost = (token,inputTextElement,inputNameElement) => {
 }
 
 export function fetchDelete(token,id) {
-  return fetch(host + id, {
+  return fetch("https://wedev-api.sky.pro/api/v2/comments/:id", {
       method: "DELETE",
       headers: {
         Authorization: token,
