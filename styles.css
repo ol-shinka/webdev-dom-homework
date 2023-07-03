@@ -163,8 +163,7 @@ body {
   
 
   .editor-button,
-  .delete-button,
-  .delete-form-button, 
+  
   .add-form-button {
     display: block; 
     margin-top: 24px;
@@ -175,9 +174,17 @@ body {
     border-radius: 18px;
     cursor: pointer;
   }
-  
+  .delete-button {
+    display: block; 
+    margin-top: 24px;
+    font-size: 24px;
+    padding: 10px 20px;
+    background-color: #bcec30;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+  }
   .button,
-  .delete-button,
   .editor-button {
     display: block; 
     font-size: 15px;

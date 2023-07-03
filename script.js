@@ -24,7 +24,7 @@ export function getAPI() {
         }
       });
       comments = appComments;
-      return  renderApp(comments, getListComments);
+      return renderApp(comments, getListComments);
     })
     .then((response) => {
       commentsLoading.style.display = 'none';

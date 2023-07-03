@@ -39,7 +39,7 @@ const renderApp = (comments, listComments) => {
     <textarea type="textarea" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
     <div class="add-form-row">
       <button class="add-form-button">Написать</button>
-      <button class="delete-form-button">Удалить комментарий</button>
+      <button class="delete-button">Удалить комментарий</button>
     </div>
   </div>
   <div class="comment-loading">Коммент добавляется...</div>
@@ -53,7 +53,7 @@ const renderApp = (comments, listComments) => {
     const inputTextElement = document.querySelector('.add-form-text');
     const buttonElement = document.querySelector('.add-form-button');
     const commentsElement = document.querySelector('.comments');
-    const buttonElementDel = document.querySelector('.delete-form-button');
+    const buttonElementDel = document.querySelector('.delete-button');
     const commentLoadingElement = document.querySelector('.comment-loading');
     const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
       " " + new Date().toLocaleTimeString().slice(0, -3);
