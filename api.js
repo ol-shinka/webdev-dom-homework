@@ -1,6 +1,6 @@
 import { getCurrentDate } from "./date.js";
 
-const host = "https://wedev-api.sky.pro/api/v2/:ol-shinka/comments";
+const host = "https://wedev-api.sky.pro/api/v2/ol-shinka/comments/";
 
 export const fetchGet = () => {
   return fetch(host, {
@@ -53,7 +53,7 @@ export const fetchPost = (token,inputTextElement,inputNameElement) => {
 }
 
 export function fetchDelete(token,id) {
-  return fetch("https://wedev-api.sky.pro/api/v2/comments/:id", {
+  return fetch(host + id, {
       method: "DELETE",
       headers: {
         Authorization: token,
