@@ -39,7 +39,7 @@ const renderApp = (comments, listComments) => {
     <textarea type="textarea" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
     <div class="add-form-row">
       <button class="add-form-button">Написать</button>
-      <button class="delete-button">Удалить комментарий</button>
+      <button class="delete-form-button">Удалить комментарий</button>
     </div>
   </div>
   <div class="comment-loading">Коммент добавляется...</div>
@@ -52,8 +52,8 @@ const renderApp = (comments, listComments) => {
     const inputNameElement = document.querySelector('.add-form-name');
     const inputTextElement = document.querySelector('.add-form-text');
     const buttonElement = document.querySelector('.add-form-button');
-    const commentsElement = document.querySelector('.comments');
-    const buttonElementDel = document.querySelector('.delete-button');
+   // const commentsElement = document.querySelector('.comments');
+    const buttonElementDel = document.querySelector('.delete-form-button');
     const commentLoadingElement = document.querySelector('.comment-loading');
     const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
       " " + new Date().toLocaleTimeString().slice(0, -3);
@@ -150,6 +150,26 @@ const renderApp = (comments, listComments) => {
 
     replyComment();
 
+    const deleteComment = () => {
+
+      const deleteButtons = document.querySelectorAll(".delete-button");
+  
+      for (const deleteButton of deleteButtons) {
+        deleteButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const id = deleteButton.dataset.id;
+          fetchDelete(token, id)
+            .then((responseData) => {
+              comments = responseData.appComments;
+              return getAPI();
+            });
+  
+        });
+      }
+    };
+  
+    deleteComment();
+
 
     buttonElement.setAttribute('disabled', true);
 
@@ -217,7 +237,6 @@ const renderApp = (comments, listComments) => {
     });
 
     buttonElementDel.addEventListener("click", () => {
-
       comments.pop();
       renderApp(comments, getListComments)
     });

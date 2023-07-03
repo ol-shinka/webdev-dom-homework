@@ -164,7 +164,8 @@ body {
 
   .editor-button,
   
-  .add-form-button {
+  .add-form-button,
+  .delete-form-button {
     display: block; 
     margin-top: 24px;
     font-size: 24px;
@@ -185,7 +186,8 @@ body {
     cursor: pointer;
   }
   .button,
-  .editor-button {
+  .editor-button,
+  .delete-button {
     display: block; 
     font-size: 15px;
     background-color: #bcec30;

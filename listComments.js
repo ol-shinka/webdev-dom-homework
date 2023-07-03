@@ -13,6 +13,7 @@ const getListComments = (comment, index) => {
           <div class="comment-footer">
             <div class="editor">
             <button data-index="${index}"class='editor-button'>Редактировать</button>
+            <button data-id="${comment.id}" class='delete-button'>Удалить</button>
             </div>
             <div class="likes">
               <span class="likes-counter"> ${comment.likesNumber}</span>
