@@ -1,5 +1,5 @@
 import { fetchPost, fetchDelete, memoryLike } from "./api.js";
-import { getAPI } from "./script.js";
+import { getAPI } from "./main.js";
 import { renderLoginComponent } from "./components/login-component.js"
 import { getListComments } from "./listComments.js";
 
