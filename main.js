@@ -17,7 +17,7 @@ export function getAPI() {
         return {
           id: comment.id,
           name: comment.author.name,
-          dateСreation: format(new Date(comment.date), 'yyyy-MM-dd hh.mm.ss'),
+          dateСreation: format(new Date(comment.date), 'yyyy-MM-dd HH.mm.ss'),
           text: comment.text,
           likeComment: comment.isLiked,
           likesNumber: comment.likes,
