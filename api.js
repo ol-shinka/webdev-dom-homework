@@ -34,7 +34,7 @@ export const fetchPost = (token,inputTextElement,inputNameElement) => {
       isLiked: false,
       likes: 0,
       propertyColorLike: 'like-button no-active-like',
-      forceError: true,
+      forceError: true
     }),
     headers: {
       Authorization: token,

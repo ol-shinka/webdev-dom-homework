@@ -24,3 +24,4 @@ const getListComments = (comment, index) => {
 }
 
 export { getListComments };
+

@@ -7,8 +7,6 @@ let token = null;
 let name = null;
 
 const renderApp = (comments, listComments) => {
-
-
   const appEl = document.getElementById('app');
 
   if (!token) {
@@ -26,13 +24,11 @@ const renderApp = (comments, listComments) => {
   } else {
 
     const commentsHtml = comments.map((comment, index) => listComments(comment, index)).join("");
-
     const appHTML = `<div class="container">
 
   <ul class="comments">
    ${commentsHtml}
   </ul>
-
   
   <div class="add-form">
     <input type="text" class="add-form-name" value = "${name}" />
@@ -45,21 +41,18 @@ const renderApp = (comments, listComments) => {
   <div class="comment-loading">Коммент добавляется...</div>
 </div>`;
 
-
     appEl.innerHTML = appHTML;
 
     const formCommentElement = document.querySelector('.add-form');
     const inputNameElement = document.querySelector('.add-form-name');
     const inputTextElement = document.querySelector('.add-form-text');
     const buttonElement = document.querySelector('.add-form-button');
-   // const commentsElement = document.querySelector('.comments');
+    // const commentsElement = document.querySelector('.comments');
     const buttonElementDel = document.querySelector('.delete-form-button');
     const commentLoadingElement = document.querySelector('.comment-loading');
     const currentDate = new Date().toLocaleDateString('default', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
       " " + new Date().toLocaleTimeString().slice(0, -3);
 
-
-    //редактировать текст коммента
 
     function changeComment() {
       const editorButtonElements = document.querySelectorAll('.editor-button');
@@ -86,8 +79,6 @@ const renderApp = (comments, listComments) => {
       }
     }
     changeComment();
-
-    // функция для имитации запросов в API
 
     function delay(interval = 100) {
       return new Promise((resolve) => {
@@ -116,7 +107,6 @@ const renderApp = (comments, listComments) => {
             commentsElementLikeIndex.likeComment = true;
             commentsElementLikeIndex.propertyColorLike = 'like-button -active-like';
           }
-
 
           const id = like.dataset.id;
 
@@ -153,7 +143,7 @@ const renderApp = (comments, listComments) => {
     const deleteComment = () => {
 
       const deleteButtons = document.querySelectorAll(".delete-button");
-  
+
       for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener("click", (event) => {
           event.stopPropagation();
@@ -163,23 +153,18 @@ const renderApp = (comments, listComments) => {
               comments = responseData.appComments;
               return getAPI();
             });
-  
+
         });
       }
     };
-  
-    deleteComment();
 
+    deleteComment();
 
     buttonElement.setAttribute('disabled', true);
 
-
     inputTextElement.addEventListener("input", () => {
-
       buttonElement.setAttribute('disabled', true);
-
       if (inputTextElement.value.length > 0) {
-
         buttonElement.removeAttribute('disabled');
       }
     });
@@ -214,14 +199,11 @@ const renderApp = (comments, listComments) => {
           buttonElement.removeAttribute('disabled');
           commentLoadingElement.classList.add('comment-loading');
           formCommentElement.classList.remove('comment-loading');
-
-          console.log(error);
         });
     };
 
 
     buttonElement.addEventListener("click", () => {
-
       commentLoadingElement.classList.remove('comment-loading');
       formCommentElement.classList.add('comment-loading');
       buttonElement.setAttribute('disabled', true);

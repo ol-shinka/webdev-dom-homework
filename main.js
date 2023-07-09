@@ -1,5 +1,6 @@
 "use strict";
 
+import { format } from "date-fns";
 import { getCurrentDate } from "./date.js";
 import renderApp from "./render.js";
 import { fetchGet } from "./api.js";
@@ -16,7 +17,7 @@ export function getAPI() {
         return {
           id: comment.id,
           name: comment.author.name,
-          dateСreation: getCurrentDate(new Date(comment.date)),
+          dateСreation: format(new Date(comment.date), 'yyyy-MM-dd HH.mm.ss'),
           text: comment.text,
           likeComment: comment.isLiked,
           likesNumber: comment.likes,
